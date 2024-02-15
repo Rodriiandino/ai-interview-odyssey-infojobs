@@ -1,4 +1,6 @@
-export default function TrainingPage() {
+import ListJobOffers from './ListJobOffers'
+
+export default function TrainingPage({ searchParams }) {
   return (
     <main className='bg-GrayL3 px-9 py-8 sm:px-6 flex flex-col h-screen max-sm:h-full'>
       <section className='max-w-3xl mx-auto'>
@@ -23,16 +25,16 @@ export default function TrainingPage() {
                 className='peer sr-only'
                 id='option1'
                 type='radio'
-                tabindex='-1'
+                tabIndex='-1'
                 name='option'
                 value='Dr. Jokester'
                 defaultChecked
               />
 
               <label
-                for='option1'
+                htmlFor='option1'
                 className='block w-full rounded-lg border border-gray-300 p-3 hover:border-primary peer-checked:border-secondary peer-checked:bg-secondary peer-checked:text-white cursor-pointer'
-                tabindex='0'
+                tabIndex='0'
               >
                 <span className='text-sm font-medium'>Dr. Jokester</span>
               </label>
@@ -43,15 +45,15 @@ export default function TrainingPage() {
                 className='peer sr-only'
                 id='option2'
                 type='radio'
-                tabindex='-1'
+                tabIndex='-1'
                 name='option'
                 value='Madame Eccentric'
               />
 
               <label
-                for='option2'
+                htmlFor='option2'
                 className='block w-full rounded-lg border border-gray-300 p-3 hover:border-primary peer-checked:border-secondary peer-checked:bg-secondary peer-checked:text-white cursor-pointer'
-                tabindex='0'
+                tabIndex='0'
               >
                 <span className='text-sm font-medium'>Madame Eccentric</span>
               </label>
@@ -62,15 +64,15 @@ export default function TrainingPage() {
                 className='peer sr-only'
                 id='option3'
                 type='radio'
-                tabindex='-1'
+                tabIndex='-1'
                 name='option'
                 value='Captain Quirk'
               />
 
               <label
-                for='option3'
+                htmlFor='option3'
                 className='block w-full rounded-lg border border-gray-300 p-3 hover:border-primary peer-checked:border-secondary peer-checked:bg-secondary peer-checked:text-white cursor-pointer'
-                tabindex='0'
+                tabIndex='0'
               >
                 <span className='text-sm font-medium'>Captain Quirk</span>
               </label>
@@ -79,7 +81,7 @@ export default function TrainingPage() {
 
           <div className='flex gap-6 justify-around max-sm:flex-col'>
             <div className='mb-4 w-1/2 max-sm:w-full'>
-              <label className='font-medium text-xl' for='interview-type'>
+              <label className='font-medium text-xl' htmlFor='interview-type'>
                 Selecciona el tipo de entrevista:
               </label>
               <select
@@ -94,7 +96,7 @@ export default function TrainingPage() {
             </div>
 
             <div className='mb-4 w-1/2 max-sm:w-full'>
-              <label className='font-medium text-xl' for='id-jobs'>
+              <label className='font-medium text-xl' htmlFor='id-jobs'>
                 ID Oferta de Trabajo
               </label>
               <input
@@ -115,6 +117,9 @@ export default function TrainingPage() {
             Empezar con la entrevista
           </button>
         </form>
+      </section>
+      <section className='max-w-3xl mx-auto mt-8 w-full'>
+        <ListJobOffers params={searchParams} />
       </section>
 
       <footer className='max-w-3xl mx-auto mt-4 overflow-y-auto'></footer>
