@@ -64,7 +64,7 @@ export default function Filtro({ page = 1, totalPages = 1 }) {
         </div>
 
         <select
-          value={category}
+          value={params.get('category') || category}
           onChange={handleCategoryChange}
           className='block w-full p-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-primary focus:border-primary sm:text-sm'
         >
@@ -76,7 +76,7 @@ export default function Filtro({ page = 1, totalPages = 1 }) {
         <input
           type='text'
           placeholder='Frontend, Backend, Fullstack...'
-          value={keyword}
+          value={params.get('q') || keyword}
           onChange={handleKeywordChange}
           className='block w-full p-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-primary focus:border-primary sm:text-sm'
         />
