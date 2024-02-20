@@ -1,5 +1,7 @@
 import ListJobOffers from './ListJobOffers'
 import { BaseSearchParams } from '@/app/types/search-params'
+import { Suspense } from 'react'
+import Loading from '../loading'
 
 export default function TrainingPage({
   searchParams: searchParams
@@ -7,7 +9,7 @@ export default function TrainingPage({
   searchParams: BaseSearchParams
 }) {
   return (
-    <main className='bg-GrayL3 px-9 py-8 sm:px-6 flex flex-col h-screen max-sm:h-full'>
+    <main className='bg-GrayL3 px-9 pt-8 sm:px-6 flex flex-col h-screen max-sm:h-full'>
       <section className='max-w-3xl mx-auto'>
         <h2 className='text-3xl font-extrabold sm:text-4xl mb-4'>
           Bienvenido a
@@ -123,11 +125,12 @@ export default function TrainingPage({
           </button>
         </form>
       </section>
-      <section className='max-w-3xl mx-auto mt-8 w-full'>
-        <ListJobOffers params={searchParams} />
-      </section>
-
-      <footer className='max-w-3xl mx-auto mt-4 overflow-y-auto'></footer>
+      <Suspense fallback={<Loading />}>
+        <section className='max-w-3xl mx-auto mt-8 w-full h-full sm:overflow-hidden sm:overflow-y-scroll'>
+          <ListJobOffers params={searchParams} />
+        </section>
+      </Suspense>
+      <footer className='max-w-3xl mx-auto mt-4'></footer>
     </main>
   )
 }
