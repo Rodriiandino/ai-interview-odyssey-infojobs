@@ -9,7 +9,12 @@ export default async function fetchApiInfojobs({
   const clientSecret = process.env.INFOJOBS_SECRET_KEY
   const authHeader = `Basic ${btoa(`${clientId}:${clientSecret}`)}`
 
-  const params = new URLSearchParams(searchParams)
+  const params = new URLSearchParams({
+    ...searchParams,
+    page: searchParams.page.toString(),
+    maxResults: searchParams.maxResults.toString()
+  })
+
   let url = 'https://api.infojobs.net/api/1/offer'
 
   if (params) url += `?${params.toString()}`
