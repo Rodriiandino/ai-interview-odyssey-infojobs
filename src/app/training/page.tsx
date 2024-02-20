@@ -1,15 +1,10 @@
 import TrainingPage from './components/TrainingPage'
-
-interface SearchParams {
-  page: string
-  category?: string
-  q?: string
-}
+import { BaseSearchParams } from '@/app/types/search-params'
 
 export default function Training({
   searchParams
 }: {
-  searchParams: SearchParams
+  searchParams: BaseSearchParams
 }) {
   return <TrainingPage searchParams={searchParams} />
 }

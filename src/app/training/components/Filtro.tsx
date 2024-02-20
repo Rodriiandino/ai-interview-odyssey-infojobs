@@ -12,32 +12,32 @@ export default function Filtro({ page = 1, totalPages = 1 }) {
   const params = new URLSearchParams(searchParams)
   const nextPage = () => {
     if (page < totalPages) {
-      params.set('page', page + 1)
+      params.set('page', (page + 1).toString())
       replace(`${pathname}?${params.toString()}`)
     }
   }
 
   const prevPage = () => {
     if (page > 1) {
-      params.set('page', page - 1)
+      params.set('page', (page - 1).toString())
       replace(`${pathname}?${params.toString()}`)
     }
   }
-  const disablePrev = page === 1
-
-  const disableNext = page === totalPages
-
-  const handleCategoryChange = e => {
+  const handleCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setCategory(e.target.value)
     params.set('category', e.target.value)
     replace(`${pathname}?${params.toString()}`)
   }
 
-  const handleKeywordChange = e => {
+  const handleKeywordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setKeyword(e.target.value)
     params.set('q', e.target.value)
     replace(`${pathname}?${params.toString()}`)
   }
+
+  const disablePrev = page === 1
+
+  const disableNext = page === totalPages
 
   return (
     <header className='sticky top-0 bg-GrayL3'>

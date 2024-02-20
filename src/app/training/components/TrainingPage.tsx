@@ -1,6 +1,11 @@
 import ListJobOffers from './ListJobOffers'
+import { BaseSearchParams } from '@/app/types/search-params'
 
-export default function TrainingPage({ searchParams }) {
+export default function TrainingPage({
+  searchParams: searchParams
+}: {
+  searchParams: BaseSearchParams
+}) {
   return (
     <main className='bg-GrayL3 px-9 py-8 sm:px-6 flex flex-col h-screen max-sm:h-full'>
       <section className='max-w-3xl mx-auto'>
@@ -25,7 +30,7 @@ export default function TrainingPage({ searchParams }) {
                 className='peer sr-only'
                 id='option1'
                 type='radio'
-                tabIndex='-1'
+                tabIndex={-1}
                 name='option'
                 value='Dr. Jokester'
                 defaultChecked
@@ -34,7 +39,7 @@ export default function TrainingPage({ searchParams }) {
               <label
                 htmlFor='option1'
                 className='block w-full rounded-lg border border-gray-300 p-3 hover:border-primary peer-checked:border-secondary peer-checked:bg-secondary peer-checked:text-white cursor-pointer'
-                tabIndex='0'
+                tabIndex={0}
               >
                 <span className='text-sm font-medium'>Dr. Jokester</span>
               </label>
@@ -45,7 +50,7 @@ export default function TrainingPage({ searchParams }) {
                 className='peer sr-only'
                 id='option2'
                 type='radio'
-                tabIndex='-1'
+                tabIndex={-1}
                 name='option'
                 value='Madame Eccentric'
               />
@@ -53,7 +58,7 @@ export default function TrainingPage({ searchParams }) {
               <label
                 htmlFor='option2'
                 className='block w-full rounded-lg border border-gray-300 p-3 hover:border-primary peer-checked:border-secondary peer-checked:bg-secondary peer-checked:text-white cursor-pointer'
-                tabIndex='0'
+                tabIndex={0}
               >
                 <span className='text-sm font-medium'>Madame Eccentric</span>
               </label>
@@ -64,7 +69,7 @@ export default function TrainingPage({ searchParams }) {
                 className='peer sr-only'
                 id='option3'
                 type='radio'
-                tabIndex='-1'
+                tabIndex={-1}
                 name='option'
                 value='Captain Quirk'
               />
@@ -72,7 +77,7 @@ export default function TrainingPage({ searchParams }) {
               <label
                 htmlFor='option3'
                 className='block w-full rounded-lg border border-gray-300 p-3 hover:border-primary peer-checked:border-secondary peer-checked:bg-secondary peer-checked:text-white cursor-pointer'
-                tabIndex='0'
+                tabIndex={0}
               >
                 <span className='text-sm font-medium'>Captain Quirk</span>
               </label>

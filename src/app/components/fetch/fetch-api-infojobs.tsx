@@ -1,4 +1,10 @@
-export default async function fetchApiInfojobs({ searchParams }) {
+import { CombinedSearchParams } from '@/app/types/search-params'
+
+export default async function fetchApiInfojobs({
+  searchParams: { ...searchParams }
+}: {
+  searchParams: CombinedSearchParams
+}) {
   const clientId = process.env.INFOJOBS_CLIENT_KEY
   const clientSecret = process.env.INFOJOBS_SECRET_KEY
   const authHeader = `Basic ${btoa(`${clientId}:${clientSecret}`)}`
