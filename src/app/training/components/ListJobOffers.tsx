@@ -22,13 +22,13 @@ export default async function ListJobOffers({
 
   const response = await fetchApiInfojobs({ searchParams })
 
-  const { currentPage, totalPages } = response
+  const { currentPage, totalPages, offers } = response
 
   return (
     <>
       <Filtro page={currentPage} totalPages={totalPages} />
       <Suspense key={currentPage} fallback={<Loading />}>
-        <ListCards params={params} />
+        <ListCards offers={offers} />
       </Suspense>
     </>
   )
