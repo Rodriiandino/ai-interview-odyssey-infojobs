@@ -26,12 +26,14 @@ export default function Filtro({ page = 1, totalPages = 1 }) {
   const handleCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setCategory(e.target.value)
     params.set('category', e.target.value)
+    if (e.target.value === '') params.delete('category')
     replace(`${pathname}?${params.toString()}`)
   }
 
   const handleKeywordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setKeyword(e.target.value)
     params.set('q', e.target.value)
+    if (e.target.value === '') params.delete('q')
     replace(`${pathname}?${params.toString()}`)
   }
 

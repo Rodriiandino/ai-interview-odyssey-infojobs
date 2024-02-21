@@ -1,4 +1,4 @@
-import fetchApiInfojobs from '@/app/components/fetch/fetch-api-infojobs'
+import fetchApiInfojobs from '@/app/services/fetch-api-infojobs'
 import Filtro from './Filtro'
 import ListCards from './ListCards'
 import {
@@ -20,20 +20,15 @@ export default async function ListJobOffers({
     order: 'updated'
   }
 
-  for (const key in searchParams) {
-    if (searchParams[key as keyof CombinedSearchParams] === '')
-      delete searchParams[key as keyof CombinedSearchParams]
-  }
-
   const response = await fetchApiInfojobs({ searchParams })
 
-  const { currentPage, totalPages, offers } = response
+  const { currentPage, totalPages } = response
 
   return (
     <>
       <Filtro page={currentPage} totalPages={totalPages} />
       <Suspense key={currentPage} fallback={<Loading />}>
-        <ListCards offers={offers} />
+        <ListCards params={params} />
       </Suspense>
     </>
   )
