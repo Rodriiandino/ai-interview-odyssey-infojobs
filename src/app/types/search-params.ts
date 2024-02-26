@@ -10,3 +10,9 @@ type AdditionalSearchParams = {
 }
 
 export type CombinedSearchParams = BaseSearchParams & AdditionalSearchParams
+
+export type SearchParamsInterview = {
+  interviewType: string
+  interviewer: string
+  jobId: string
+}

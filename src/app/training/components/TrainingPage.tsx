@@ -2,6 +2,11 @@ import ListJobOffers from './ListJobOffers'
 import { BaseSearchParams } from '@/app/types/search-params'
 import { Suspense } from 'react'
 import Loading from '../loading'
+import {
+  SearchParamKey,
+  InterviewType,
+  Interviewer
+} from '@/app/types/training-key'
 
 export default function TrainingPage({
   searchParams: searchParams
@@ -33,8 +38,8 @@ export default function TrainingPage({
                 id='option1'
                 type='radio'
                 tabIndex={-1}
-                name='option'
-                value='Dr. Jokester'
+                name={SearchParamKey.Interviewer}
+                value={Interviewer.DrJokester}
                 defaultChecked
               />
 
@@ -43,7 +48,9 @@ export default function TrainingPage({
                 className='block w-full rounded-lg border border-gray-300 p-3 hover:border-primary peer-checked:border-secondary peer-checked:bg-secondary peer-checked:text-white cursor-pointer'
                 tabIndex={0}
               >
-                <span className='text-sm font-medium'>Dr. Jokester</span>
+                <span className='text-sm font-medium'>
+                  {Interviewer.DrJokester}
+                </span>
               </label>
             </div>
 
@@ -53,8 +60,8 @@ export default function TrainingPage({
                 id='option2'
                 type='radio'
                 tabIndex={-1}
-                name='option'
-                value='Madame Eccentric'
+                name={SearchParamKey.Interviewer}
+                value={Interviewer.MadameEccentric}
               />
 
               <label
@@ -62,7 +69,9 @@ export default function TrainingPage({
                 className='block w-full rounded-lg border border-gray-300 p-3 hover:border-primary peer-checked:border-secondary peer-checked:bg-secondary peer-checked:text-white cursor-pointer'
                 tabIndex={0}
               >
-                <span className='text-sm font-medium'>Madame Eccentric</span>
+                <span className='text-sm font-medium'>
+                  {Interviewer.MadameEccentric}
+                </span>
               </label>
             </div>
 
@@ -72,8 +81,8 @@ export default function TrainingPage({
                 id='option3'
                 type='radio'
                 tabIndex={-1}
-                name='option'
-                value='Captain Quirk'
+                name={SearchParamKey.Interviewer}
+                value={Interviewer.CaptainQuirk}
               />
 
               <label
@@ -81,7 +90,9 @@ export default function TrainingPage({
                 className='block w-full rounded-lg border border-gray-300 p-3 hover:border-primary peer-checked:border-secondary peer-checked:bg-secondary peer-checked:text-white cursor-pointer'
                 tabIndex={0}
               >
-                <span className='text-sm font-medium'>Captain Quirk</span>
+                <span className='text-sm font-medium'>
+                  {Interviewer.CaptainQuirk}
+                </span>
               </label>
             </div>
           </div>
@@ -92,13 +103,15 @@ export default function TrainingPage({
                 Selecciona el tipo de entrevista:
               </label>
               <select
-                name='interview-type'
+                name={SearchParamKey.InterviewType}
                 id='interview-type'
                 className='block w-full mt-1 p-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-primary focus:border-primary sm:text-sm'
               >
-                <option value='technical'>Técnica</option>
-                <option value='behavioral'>Conceptual</option>
-                <option value='case'>Resolución de problemas</option>
+                <option value={InterviewType.Technical}>Técnica</option>
+                <option value={InterviewType.Behavioral}>Conceptual</option>
+                <option value={InterviewType.Case}>
+                  Resolución de problemas
+                </option>
               </select>
             </div>
 
@@ -108,7 +121,7 @@ export default function TrainingPage({
               </label>
               <input
                 type='text'
-                name='id-jobs'
+                name={SearchParamKey.JobId}
                 id='id-jobs'
                 className='block w-full mt-1 p-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-primary focus:border-primary sm:text-sm'
                 placeholder='282f50dec44d1ca...'
