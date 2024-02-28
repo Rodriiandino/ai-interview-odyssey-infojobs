@@ -3,7 +3,7 @@
 import { Logo } from './Logo'
 import { useTrainingData } from './hooks/useTrainingData'
 import { useState, useEffect } from 'react'
-import fetchApiOpeniai from '@/app/services/fetch-api-openiai'
+import fetchApiOpeniai from '@/app/services/fetch-api-routes-openiai'
 
 export default function InterviewPage() {
   const [interviewData, setInterviewData] = useState(null)
@@ -30,8 +30,6 @@ export default function InterviewPage() {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
-
-  console.log('interviewData:', interviewData)
 
   return (
     <div className='bg-GrayL3 min-h-screen py-8 px-4 max-sm:px-0 max-sm:pt-0  max-sm:pb-12'>
