@@ -1,6 +1,7 @@
 'use client'
 import { useSearchParams, usePathname, useRouter } from 'next/navigation'
-import { useState } from 'react'
+import { useState, useCallback } from 'react'
+import { debounce } from 'lodash'
 
 export default function Filtro({ page = 1, totalPages = 1 }) {
   const [category, setCategory] = useState('')
@@ -26,19 +27,29 @@ export default function Filtro({ page = 1, totalPages = 1 }) {
   const handleCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setCategory(e.target.value)
     params.set('category', e.target.value)
+    params.set('page', '1')
     if (e.target.value === '') params.delete('category')
     replace(`${pathname}?${params.toString()}`)
   }
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const debounced = useCallback(
+    debounce((value: string) => {
+      params.set('q', value)
+      params.set('page', '1')
+      if (value === '') params.delete('q')
+      replace(`${pathname}?${params.toString()}`)
+    }, 300),
+    []
+  )
+
   const handleKeywordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setKeyword(e.target.value)
-    params.set('q', e.target.value)
-    if (e.target.value === '') params.delete('q')
-    replace(`${pathname}?${params.toString()}`)
+    const value = e.target.value
+    setKeyword(value)
+    debounced(value)
   }
 
   const disablePrev = page === 1
-
   const disableNext = page === totalPages
 
   return (

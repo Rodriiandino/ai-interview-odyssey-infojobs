@@ -26,8 +26,8 @@ export function useTrainingData() {
   )
 
   const trainingData: SearchParamsInterview = {
-    interviewType: selectedInterviewType || InterviewType.Technical,
-    interviewer: selectedInterviewer || Interviewer.DrJokester,
+    interviewType: selectedInterviewType,
+    interviewer: selectedInterviewer,
     jobId: jobId || ''
   }
 
