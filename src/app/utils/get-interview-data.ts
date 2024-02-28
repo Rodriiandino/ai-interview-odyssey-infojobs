@@ -6,8 +6,8 @@ import {
 } from '../types/training-key'
 
 export function getInterviewData(
-  selectedInterviewType: InterviewType | null,
-  selectedInterviewer: Interviewer | null
+  selectedInterviewType: InterviewType,
+  selectedInterviewer: Interviewer
 ) {
   const interviewCharacteristics = selectedInterviewType
     ? assignCharacteristics(selectedInterviewType)

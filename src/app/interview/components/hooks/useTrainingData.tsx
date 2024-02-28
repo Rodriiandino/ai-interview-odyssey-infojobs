@@ -14,10 +14,10 @@ export function useTrainingData() {
 
   const selectedInterviewType = searchParams.get(
     SearchParamKey.InterviewType
-  ) as InterviewType | null
+  ) as InterviewType
   const selectedInterviewer = searchParams.get(
     SearchParamKey.Interviewer
-  ) as Interviewer | null
+  ) as Interviewer
   const jobId = searchParams.get(SearchParamKey.JobId)
 
   const { interviewCharacteristics, interviewPersonality } = getInterviewData(

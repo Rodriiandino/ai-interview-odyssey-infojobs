@@ -17,6 +17,8 @@ export interface APIResultOffer {
   updated: Date
   author: Author
   requirementMin: string
+  minRequirements: string
+  description: string
   bold: boolean
   applications: string
   subSegment: number
