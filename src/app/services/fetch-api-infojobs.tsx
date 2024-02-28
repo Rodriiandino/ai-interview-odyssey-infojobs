@@ -1,5 +1,9 @@
 import { CombinedSearchParams } from '@/app/types/search-params'
 
+const clientId = process.env.INFOJOBS_CLIENT_KEY
+const clientSecret = process.env.INFOJOBS_SECRET_KEY
+const authHeader = `Basic ${btoa(`${clientId}:${clientSecret}`)}`
+
 export default async function fetchApiInfojobs({
   searchParams: { ...searchParams }
 }: {
@@ -11,14 +15,16 @@ export default async function fetchApiInfojobs({
     maxResults: searchParams.maxResults.toString()
   })
 
-  let url = 'http://localhost:3000/api/get-offers'
+  let url = 'https://api.infojobs.net/api/1/offer'
+
   if (params) url += `?${params.toString()}`
 
   try {
     const response = await fetch(url, {
-      method: 'GET',
       headers: {
-        'Content-Type': 'application/json'
+        Authorization: authHeader,
+        'Content-Type': 'application/json',
+        Accept: 'application/json'
       }
     })
 
