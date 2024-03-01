@@ -16,9 +16,7 @@ export default function Card({ offer: offer }: { offer: APIResultOffer }) {
         </a>
         <span className=' text-gray-400 p-1'>{offer.id}</span>
 
-        <p className='mt-1 text-sm text-gray-500'>
-          {offer.requirementMin || offer.minRequirements || offer.description}
-        </p>
+        <p className='mt-1 text-sm text-gray-500'>{offer.requirementMin}</p>
 
         <div className='mt-4 flex flex-wrap gap-1'>
           <span className='whitespace-nowrap rounded-full bg-purple-100 px-2.5 py-0.5 text-xs text-purple-600'>

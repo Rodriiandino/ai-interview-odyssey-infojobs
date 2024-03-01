@@ -34,27 +34,22 @@ export const GET = async (req: { url: string | URL }) => {
   //   jobData
   // })
 
-  console.log('jobData:', jobData)
-
-  const mockOpenAIResponse = {
-    Response: `Pregunta:
+  const mockOpenAIResponse = `Pregunta:
 
     ¡Hola! Imagina que eres un superhéroe del código y te encuentras en una misión para salvar el mundo de un caos digital. De repente, te enfrentas a un desafío técnico. ¿Cómo abordarías la situación?
     
     Respuestas:
     
-    Llamaría a mi fiel compañero, el "Debugger Man", para que me ayude a rastrear el problema.
-    Analizaría detenidamente los requisitos y diseñaría una solución utilizando las últimas tendencias en tecnologías front-end.
-    Haría una pausa para tomar una taza de café y dejar que mi mente brillante encuentre la solución.
-    Gritaría "¡Eureka!" y comenzaría a escribir código a toda velocidad mientras bailo la canción del éxito.
-    Respuesta correcta:
+    1. Llamaría a mi fiel compañero, el "Debugger Man", para que me ayude a rastrear el problema.
+    2. Analizaría detenidamente los requisitos y diseñaría una solución utilizando las últimas tendencias en tecnologías front-end.
+    3. Haría una pausa para tomar una taza de café y dejar que mi mente brillante encuentre la solución.
+    4. Gritaría "¡Eureka!" y comenzaría a escribir código a toda velocidad mientras bailo la canción del éxito.
     
-    Respuesta 2.
+    Respuesta correcta: Analizaría detenidamente los requisitos y diseñaría una solución utilizando las últimas tendencias en tecnologías front-end.
     
     Explicación:
     
     En situaciones de resolución de problemas complejos, es crucial analizar cuidadosamente los requisitos y diseñar una solución efectiva utilizando las últimas tendencias en tecnologías front-end, como se especifica en los requisitos del puesto. Llamar a un compañero, tomar un descanso o tener una epifanía pueden ser pasos posteriores, pero el análisis y diseño inicial son fundamentales.`
-  }
 
   const interviewData = {
     jobData: {
