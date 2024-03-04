@@ -1,4 +1,4 @@
-import fetchApiInfojobs from '@/app/services/fetch-api-infojobs'
+import { fetchApiInfojobs } from '@/app/services/fetch-api-infojobs'
 import Filtro from './Filtro'
 import ListCards from './ListCards'
 import {

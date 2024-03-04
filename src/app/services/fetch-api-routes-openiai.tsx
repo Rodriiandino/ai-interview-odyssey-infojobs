@@ -9,7 +9,7 @@ export default async function fetchApiOpeniai({
     ...searchParamsInterview
   })
 
-  let url = 'http://localhost:3000/api/get-interview'
+  let url = '/api/get-interview'
   if (params) url += `?${params.toString()}`
 
   try {

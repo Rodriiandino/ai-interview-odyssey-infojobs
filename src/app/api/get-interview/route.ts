@@ -4,7 +4,7 @@ import { APIResultOffer } from '@/app/types/result-offer'
 import { NextResponse } from 'next/server'
 import { getInterviewData } from '@/app/utils/get-interview-data'
 import OpenAI from 'openai'
-import { title } from 'process'
+import { fetchApiInfojobsGetJob } from '@/app/services/fetch-api-infojobs'
 
 const apiKeyOpenAI = process.env.OPENAI_API_KEY
 
@@ -27,10 +27,10 @@ export const GET = async (req: { url: string | URL }) => {
     selectedInterviewer
   )
 
-  const jobData: APIResultOffer = await getJobData({ selectedJob })
+  const jobData: APIResultOffer = await fetchApiInfojobsGetJob({ selectedJob })
   // const openAIResponse = await getOpenAIResponse({
-  //   interviewer: selectedInterviewer,
-  //   interviewType: selectedInterviewType,
+  //   interviewer: interviewPersonality,
+  //   interviewType: interviewCharacteristics,
   //   jobData
   // })
 
@@ -62,27 +62,6 @@ export const GET = async (req: { url: string | URL }) => {
 
   try {
     return NextResponse.json(interviewData)
-  } catch (error) {
-    console.error('Error:', error)
-  }
-}
-
-const clientId = process.env.INFOJOBS_CLIENT_KEY
-const clientSecret = process.env.INFOJOBS_SECRET_KEY
-const authHeader = `Basic ${btoa(`${clientId}:${clientSecret}`)}`
-
-const getJobData = async ({ selectedJob }: { selectedJob: string }) => {
-  const url = `https://api.infojobs.net/api/1/offer/${selectedJob}`
-  try {
-    const response = await fetch(url, {
-      headers: {
-        Authorization: authHeader,
-        'Content-Type': 'application/json',
-        Accept: 'application/json'
-      }
-    })
-
-    return await response.json()
   } catch (error) {
     console.error('Error:', error)
   }
