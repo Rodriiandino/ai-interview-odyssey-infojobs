@@ -42,3 +42,10 @@ interface Category {
   id: number
   value: string
 }
+
+export interface Categories {
+  id: number
+  value: string
+  order: number
+  key: string
+}
