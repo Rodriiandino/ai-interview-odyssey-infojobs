@@ -1,16 +1,25 @@
 'use client'
 import { useSearchParams, usePathname, useRouter } from 'next/navigation'
-import { useState, useCallback } from 'react'
+import { useState, useCallback, useEffect } from 'react'
 import { debounce } from 'lodash'
+import { Categories } from '../../types/result-offer'
 
-export default function Filtro({ page = 1, totalPages = 1 }) {
+export default function Filtro({
+  page = 1,
+  totalPages = 1
+}: {
+  page: number
+  totalPages: number
+}) {
   const [category, setCategory] = useState('')
   const [keyword, setKeyword] = useState('')
+  const [categories, setCategories] = useState<Categories[]>([])
   const pathname = usePathname()
   const searchParams = useSearchParams()
   const { replace } = useRouter()
 
   const params = new URLSearchParams(searchParams)
+
   const nextPage = () => {
     if (page < totalPages) {
       params.set('page', (page + 1).toString())
@@ -28,7 +37,7 @@ export default function Filtro({ page = 1, totalPages = 1 }) {
     setCategory(e.target.value)
     params.set('category', e.target.value)
     params.set('page', '1')
-    if (e.target.value === '') params.delete('category')
+    if (e.target.value === '-') params.delete('category')
     replace(`${pathname}?${params.toString()}`)
   }
 
@@ -51,6 +60,13 @@ export default function Filtro({ page = 1, totalPages = 1 }) {
 
   const disablePrev = page === 1
   const disableNext = page === totalPages
+
+  useEffect(() => {
+    fetch('/api/get-categories')
+      .then(response => response.json())
+      .then(data => setCategories(data))
+      .catch(error => console.error('Error:', error))
+  }, [])
 
   return (
     <header className='sticky top-0 bg-GrayL3'>
@@ -81,10 +97,11 @@ export default function Filtro({ page = 1, totalPages = 1 }) {
           onChange={handleCategoryChange}
           className='block w-full p-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-primary focus:border-primary sm:text-sm'
         >
-          <option value=''>Todas las categorías</option>
-          <option value='informatica-telecomunicaciones'>
-            Informática y Telecomunicaciones
-          </option>
+          {categories.map(category => (
+            <option key={category.id} value={category.key}>
+              {category.value}
+            </option>
+          ))}
         </select>
         <input
           type='text'
