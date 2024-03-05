@@ -18,6 +18,9 @@ export default function useInterviewData({
   const [explanation, setExplanation] = useState<string>('')
   const [submitted, setSubmitted] = useState<boolean>(false)
   const [loading, setLoading] = useState<boolean>(false)
+  const [currentQuestion, setCurrentQuestion] = useState<number>(1)
+  const [limit, setLimit] = useState<number>(5)
+  const [finished, setFinished] = useState<boolean>(false)
 
   const fetchData = async ({
     trainingData
@@ -93,6 +96,23 @@ export default function useInterviewData({
   }
 
   const handleNewQuestion = () => {
+    if (currentQuestion === limit) {
+      setFinished(true)
+      return
+    }
+    setCurrentQuestion(currentQuestion + 1)
+    setAnswers([])
+    setQuestion('')
+    setSelectedAnswer(NaN)
+    setAnswerStatus('')
+    setSubmitted(false)
+    setAnswerIsSelected(false)
+    fetchData({ trainingData })
+  }
+
+  const handleReset = () => {
+    setCurrentQuestion(1)
+    setFinished(false)
     setAnswers([])
     setQuestion('')
     setSelectedAnswer(NaN)
@@ -114,6 +134,10 @@ export default function useInterviewData({
     correctAnswer,
     handleAnswerSelection,
     handleSubmit,
-    handleNewQuestion
+    handleNewQuestion,
+    currentQuestion,
+    limit,
+    finished,
+    handleReset
   }
 }
