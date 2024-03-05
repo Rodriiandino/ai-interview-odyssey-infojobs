@@ -1,4 +1,4 @@
-export function Logo() {
+export function Logo(props: React.SVGProps<SVGSVGElement>) {
   return (
     <svg
       className='w-56'
@@ -7,6 +7,7 @@ export function Logo() {
       y='0'
       viewBox='0 0 138 34.942'
       fill='#2088c2'
+      {...props}
     >
       <g>
         <g>
