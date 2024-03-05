@@ -1,4 +1,7 @@
-import { fetchApiInfojobs } from '@/app/services/fetch-api-infojobs'
+import {
+  fetchApiInfojobs,
+  fetchApiInfojobsGetCategories
+} from '@/app/services/fetch-api-infojobs'
 import Filtro from './Filtro'
 import ListCards from './ListCards'
 import {
@@ -20,13 +23,18 @@ export default async function ListJobOffers({
     order: 'updated'
   }
 
-  const response = await fetchApiInfojobs({ searchParams })
-
-  const { currentPage, totalPages, offers } = response
+  const [{ currentPage, totalPages, offers }, categories] = await Promise.all([
+    fetchApiInfojobs({ searchParams }),
+    fetchApiInfojobsGetCategories()
+  ])
 
   return (
     <>
-      <Filtro page={currentPage} totalPages={totalPages} />
+      <Filtro
+        page={currentPage}
+        totalPages={totalPages}
+        categories={categories}
+      />
       <Suspense key={currentPage} fallback={<Loading />}>
         <ListCards offers={offers} />
       </Suspense>

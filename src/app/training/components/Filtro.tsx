@@ -6,14 +6,15 @@ import { Categories } from '../../types/result-offer'
 
 export default function Filtro({
   page = 1,
-  totalPages = 1
+  totalPages = 1,
+  categories
 }: {
   page: number
   totalPages: number
+  categories: Categories[]
 }) {
   const [category, setCategory] = useState('')
   const [keyword, setKeyword] = useState('')
-  const [categories, setCategories] = useState<Categories[]>([])
   const pathname = usePathname()
   const searchParams = useSearchParams()
   const { replace } = useRouter()
@@ -41,6 +42,15 @@ export default function Filtro({
     replace(`${pathname}?${params.toString()}`)
   }
 
+  useEffect(() => {
+    const category = params.get('category')
+    if (category) setCategory(category)
+
+    const keyword = params.get('q')
+    if (keyword) setKeyword(keyword)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const debounced = useCallback(
     debounce((value: string) => {
@@ -49,7 +59,7 @@ export default function Filtro({
       if (value === '') params.delete('q')
       replace(`${pathname}?${params.toString()}`)
     }, 300),
-    []
+    [categories]
   )
 
   const handleKeywordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -60,13 +70,6 @@ export default function Filtro({
 
   const disablePrev = page === 1
   const disableNext = page === totalPages
-
-  useEffect(() => {
-    fetch('/api/get-categories')
-      .then(response => response.json())
-      .then(data => setCategories(data))
-      .catch(error => console.error('Error:', error))
-  }, [])
 
   return (
     <header className='sticky top-0 bg-GrayL3'>
@@ -93,7 +96,7 @@ export default function Filtro({
         </div>
 
         <select
-          value={params.get('category') || category}
+          value={category}
           onChange={handleCategoryChange}
           className='block w-full p-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-primary focus:border-primary sm:text-sm'
         >
@@ -106,7 +109,7 @@ export default function Filtro({
         <input
           type='text'
           placeholder='Frontend, Backend, Fullstack...'
-          value={params.get('q') || keyword}
+          value={keyword}
           onChange={handleKeywordChange}
           className='block w-full p-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-primary focus:border-primary sm:text-sm'
         />
