@@ -163,7 +163,7 @@ export default function InterviewPage() {
         </main>
         <footer>
           <button
-            className='bg-primary text-white px-4 py-2 rounded-lg mr-2 hover:bg-secondary disabled:opacity-50'
+            className='bg-primary text-white px-4 py-2 rounded-lg mr-2 hover:bg-secondary disabled:opacity-50 transition-colors duration-200'
             onClick={() => handleSubmit()}
             disabled={loading || !answerIsSelected || submitted}
           >
@@ -171,7 +171,7 @@ export default function InterviewPage() {
           </button>
           {submitted && (
             <button
-              className='bg-primary text-white px-4 py-2 rounded-lg mr-2 hover:bg-secondary disabled:opacity-50'
+              className='bg-primary text-white px-4 py-2 rounded-lg mr-2 hover:bg-secondary disabled:opacity-50 transition-colors duration-200'
               onClick={() => handleNewQuestion()}
               disabled={loading}
             >

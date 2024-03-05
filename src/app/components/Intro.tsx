@@ -22,7 +22,7 @@ export default function Intro() {
             <div className='mt-8 flex justify-center items-center sm:items-start sm:justify-normal'>
               <a
                 href='/training'
-                className='block rounded-lg bg-primary px-12 py-3 text-sm font-medium text-white shadow hover:bg-secondary transition duration-300 focus:outline-none focus:ring active:bg-rose-500 sm:w-auto'
+                className='block rounded-lg bg-primary px-12 py-3 text-sm font-medium text-white shadow hover:bg-secondary transition-colors duration-200 focus:outline-none focus:ring active:bg-rose-500 sm:w-auto'
               >
                 Comenzar
               </a>

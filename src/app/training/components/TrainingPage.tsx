@@ -45,7 +45,7 @@ export default function TrainingPage({
 
               <label
                 htmlFor='option1'
-                className='block w-full rounded-lg border border-gray-300 p-3 hover:border-primary peer-checked:border-secondary peer-checked:bg-secondary peer-checked:text-white cursor-pointer'
+                className='block w-full rounded-lg border border-gray-300 p-3 hover:border-primary peer-checked:border-secondary peer-checked:bg-secondary peer-checked:text-white cursor-pointer transition-colors duration-200'
                 tabIndex={0}
               >
                 <span className='text-sm font-medium'>
@@ -66,7 +66,7 @@ export default function TrainingPage({
 
               <label
                 htmlFor='option2'
-                className='block w-full rounded-lg border border-gray-300 p-3 hover:border-primary peer-checked:border-secondary peer-checked:bg-secondary peer-checked:text-white cursor-pointer'
+                className='block w-full rounded-lg border border-gray-300 p-3 hover:border-primary peer-checked:border-secondary peer-checked:bg-secondary peer-checked:text-white cursor-pointer transition-colors duration-200'
                 tabIndex={0}
               >
                 <span className='text-sm font-medium'>
@@ -87,7 +87,7 @@ export default function TrainingPage({
 
               <label
                 htmlFor='option3'
-                className='block w-full rounded-lg border border-gray-300 p-3 hover:border-primary peer-checked:border-secondary peer-checked:bg-secondary peer-checked:text-white cursor-pointer'
+                className='block w-full rounded-lg border border-gray-300 p-3 hover:border-primary peer-checked:border-secondary peer-checked:bg-secondary peer-checked:text-white cursor-pointer transition-colors duration-200'
                 tabIndex={0}
               >
                 <span className='text-sm font-medium'>
@@ -132,7 +132,7 @@ export default function TrainingPage({
 
           <button
             type='submit'
-            className='block w-full rounded-lg bg-primary px-12 py-3 text-sm font-medium text-white shadow hover:bg-secondary focus:outline-none focus:ring active:bg-rose-500 sm:w-auto'
+            className='block w-full rounded-lg bg-primary px-12 py-3 text-sm font-medium text-white shadow hover:bg-secondary focus:outline-none focus:ring active:bg-rose-500 sm:w-auto transition-colors duration-200'
           >
             Empezar con la entrevista
           </button>

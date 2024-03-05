@@ -77,7 +77,7 @@ export default function Filtro({
       <div className='flex m-0 p-0 gap-4 justify-between items-center flex-col sm:flex-row'>
         <div className='flex m-0 p-0 gap-2 items-center'>
           <button
-            className='w-24 py-2 bg-primary text-white rounded-lg hover:bg-secondary disabled:bg-GrayL2 focus:outline-none sm:text-sm'
+            className='w-24 py-2 bg-primary text-white rounded-lg hover:bg-secondary disabled:bg-GrayL2 focus:outline-none sm:text-sm transition-colors duration-200'
             onClick={prevPage}
             disabled={disablePrev}
           >
@@ -87,7 +87,7 @@ export default function Filtro({
             {page} / {totalPages}
           </p>
           <button
-            className='w-24 py-2 bg-primary text-white rounded-lg hover:bg-secondary disabled:bg-GrayL2 focus:outline-none sm:text-sm'
+            className='w-24 py-2 bg-primary text-white rounded-lg hover:bg-secondary disabled:bg-GrayL2 focus:outline-none sm:text-sm transition-colors duration-200'
             onClick={nextPage}
             disabled={disableNext}
           >
