@@ -6,26 +6,36 @@ import useInterviewData from './hooks/useInterviewData'
 import { useTrainingData } from './hooks/useTrainingData'
 
 export default function InterviewPage() {
+  const [pageNumber, setIndex] = useState(0)
+
   const { trainingData, interviewCharacteristics, interviewPersonality } =
     useTrainingData()
   const {
-    answerIsSelected,
-    answerStatus,
-    answers,
-    correctAnswer,
-    explanation,
     handleAnswerSelection,
     handleNewQuestion,
     handleSubmit,
     loading,
-    question,
-    selectedAnswer,
-    submitted,
-    currentQuestion,
+    currentQuestionIndex,
     limit,
     finished,
-    handleReset
+    handleReset,
+    questionData,
+    jobData
   } = useInterviewData({ trainingData })
+
+  const handleNext = () => {
+    if (pageNumber >= questionData.length - 1) {
+      return
+    }
+    setIndex(prev => prev + 1)
+  }
+
+  const handlePrev = () => {
+    if (pageNumber <= 0) {
+      return
+    }
+    setIndex(prev => prev - 1)
+  }
 
   return (
     <div className='bg-GrayL3 min-h-screen py-8 px-4 max-sm:px-2 max-sm:py-4'>
@@ -40,16 +50,138 @@ export default function InterviewPage() {
 
           <div className='flex items-center text-center gap-3 bg-primaryL1 text-white h-14 w-14 rounded-full'>
             <span className='w-full'>
-              {currentQuestion} / {limit}
+              {currentQuestionIndex + 1} / {limit}
             </span>
           </div>
         </header>
         {finished ? (
-          <div className='flex items-center justify-center w-full h-full'>
-            <h2 className='text-GrayD4 text-center text-2xl'>
+          <main className='flex flex-col justify-center w-full h-full  gap-4'>
+            <h2 className='text-primary font-medium text-center text-xl sm:text-2xl '>
               ¡Felicidades! Has completado la entrevista.
             </h2>
-          </div>
+            <section className='flex gap-4 sm:justify-evenly  flex-wrap'>
+              <div className='flex items-center gap-2 flex-wrap'>
+                <h3 className='font-bold text-xl text-primary'>Resultados:</h3>
+                <ul className='flex gap-3'>
+                  {questionData.map((question, index) => (
+                    <li key={index}>
+                      <h4 className='font-bold text-primaryL1'>
+                        Pregunta {index + 1}
+                      </h4>
+                      <p className='text-GrayD4'>
+                        {question.answerStatus
+                          ? question.answerStatus === 'Correcto'
+                            ? 'Correcto'
+                            : 'Incorrecto'
+                          : 'No respondido'}
+                      </p>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <div className='flex items-center gap-2'>
+                <h3 className='font-bold  text-xl text-primary'>
+                  Entrevistador:
+                </h3>
+                <p className='text-GrayD4'>{trainingData.interviewer}</p>
+              </div>
+              <div className='flex items-center gap-2'>
+                <h3 className='font-bold  text-xl text-primary'>
+                  Tipo de Entrevista:
+                </h3>
+                <p className='text-GrayD4'>{trainingData.interviewType}</p>
+              </div>
+            </section>
+            <section className=''>
+              <h3 className='font-bold text-xl text-primary'>
+                Detalles del trabajo
+              </h3>
+              <p>
+                <strong className='text-primaryL1'>Título del puesto:</strong>{' '}
+                {jobData?.title} <br />
+                <strong className='text-primaryL1'>
+                  Requisitos mínimos:
+                </strong>{' '}
+                {jobData?.requirement}
+              </p>
+            </section>
+            <section>
+              <h3 className='font-bold text-xl text-primary'>Resumen</h3>
+              <div className='flex gap-3 justify-center items-center'>
+                <button
+                  onClick={handlePrev}
+                  disabled={pageNumber <= 0}
+                  className='bg-primary text-white px-4 py-2 rounded-lg  hover:bg-secondary disabled:opacity-50 transition-colors duration-200'
+                >
+                  Anterior
+                </button>
+                <article>
+                  <h4 className='text-primaryL1 text-lg'>
+                    {questionData[pageNumber]?.question}
+                  </h4>
+                  <ul>
+                    {questionData[pageNumber]?.answers.map((answer, index) => (
+                      <li key={index} className='mb-2'>
+                        <button
+                          className={`w-full p-2 text-lg text-start hover:scale-[1.01] disabled:opacity-65 duration-200
+                            ${
+                              questionData[pageNumber]?.selectedAnswer ===
+                                index &&
+                              questionData[pageNumber]?.answerStatus ===
+                                'Correcto'
+                                ? 'bg-green-100 text-green-600'
+                                : questionData[pageNumber]?.selectedAnswer ===
+                                    index &&
+                                  questionData[pageNumber]?.answerStatus ===
+                                    'Incorrecto'
+                                ? 'bg-red-100 text-red-600'
+                                : ''
+                            }
+                            `}
+                          disabled={questionData[pageNumber]?.submitted}
+                        >
+                          {answer}
+                          <hr />
+                        </button>
+                      </li>
+                    ))}
+                  </ul>
+                  {questionData[pageNumber]?.submitted && (
+                    <footer>
+                      {questionData[pageNumber]?.correctAnswer && (
+                        <article className='mb-2'>
+                          <h3 className='font-bold  text-xl text-primary'>
+                            Respuesta correcta
+                          </h3>
+                          <p className='text-GrayD4'>
+                            {questionData[pageNumber]?.correctAnswer}
+                          </p>
+                        </article>
+                      )}
+                      {questionData[pageNumber]?.explanation && (
+                        <article className='mb-4'>
+                          <h3 className='font-bold text-xl text-primary'>
+                            Explicación
+                          </h3>
+                          <p className='text-GrayD4'>
+                            {questionData[pageNumber]?.explanation}
+                          </p>
+                        </article>
+                      )}
+                    </footer>
+                  )}
+                </article>
+                <button
+                  onClick={handleNext}
+                  disabled={pageNumber >= questionData.length - 1}
+                  className='bg-primary text-white px-4 py-2 rounded-lg  hover:bg-secondary disabled:opacity-50 transition-colors duration-200'
+                >
+                  Siguiente
+                </button>
+              </div>
+            </section>
+          </main>
         ) : (
           <main>
             <header className='mb-4'>
@@ -74,7 +206,7 @@ export default function InterviewPage() {
             </header>
             <section className='mb-4'>
               <h3 className='font-bold mb-2 text-xl text-primary'>Enunciado</h3>
-              {!question ? (
+              {loading ? (
                 <div
                   role='status'
                   className='space-y-2.5 animate-pulse max-w-lg'
@@ -92,7 +224,9 @@ export default function InterviewPage() {
                   <span className='sr-only'>Loading...</span>
                 </div>
               ) : (
-                <p className='text-GrayD4 text-lg'>{question}</p>
+                <p className='text-GrayD4 text-lg'>
+                  {questionData[currentQuestionIndex]?.question}
+                </p>
               )}
             </section>
             <section className='mb-4'>
@@ -100,7 +234,7 @@ export default function InterviewPage() {
                 Respuestas
               </h3>
 
-              {!question ? (
+              {loading ? (
                 <div
                   role='status'
                   className='space-y-4 divide-y animate-pulse dark:divide-primaryL1 p-4 w-full'
@@ -137,51 +271,62 @@ export default function InterviewPage() {
                 </div>
               ) : (
                 <ul>
-                  {answers.map((answer, index) => (
-                    <li key={index} className='mb-2'>
-                      <button
-                        className={`w-full p-4 text-lg text-start hover:scale-[1.03] disabled:opacity-65 duration-200 ${
-                          selectedAnswer === index
-                            ? 'bg-primaryL1 text-white disabled:opacity-100'
-                            : ''
-                        }`}
-                        onClick={() => handleAnswerSelection(index)}
-                        disabled={submitted}
-                      >
-                        {answer}
-                        <hr />
-                      </button>
-                    </li>
-                  ))}
+                  {questionData[currentQuestionIndex]?.answers.map(
+                    (answer, index) => (
+                      <li key={index} className='mb-2'>
+                        <button
+                          className={`w-full p-4 text-lg text-start hover:scale-[1.03] disabled:opacity-65 duration-200 ${
+                            questionData[currentQuestionIndex]
+                              .selectedAnswer === index
+                              ? 'bg-primaryL1 text-white disabled:opacity-100'
+                              : ''
+                          }`}
+                          onClick={() => handleAnswerSelection(index)}
+                          disabled={
+                            questionData[currentQuestionIndex]?.submitted
+                          }
+                        >
+                          {answer}
+                          <hr />
+                        </button>
+                      </li>
+                    )
+                  )}
                 </ul>
               )}
             </section>
 
             <footer>
-              {submitted && (
+              {questionData[currentQuestionIndex]?.submitted && (
                 <>
-                  {answerStatus && (
+                  {questionData[currentQuestionIndex]?.answerStatus && (
                     <h3 className='font-bold mb-2 text-xl text-primary'>
                       Respuesta seleccionada:{' '}
-                      <span className='text-secondary'>{answerStatus}</span>
+                      <span className='text-secondary'>
+                        {questionData[currentQuestionIndex]?.answerStatus}
+                      </span>
                     </h3>
                   )}
 
-                  {correctAnswer && (
+                  {questionData[currentQuestionIndex]?.correctAnswer && (
                     <article className='mb-2'>
                       <h3 className='font-bold  text-xl text-primary'>
                         Respuesta correcta
                       </h3>
-                      <p className='text-GrayD4'>{correctAnswer}</p>
+                      <p className='text-GrayD4'>
+                        {questionData[currentQuestionIndex]?.correctAnswer}
+                      </p>
                     </article>
                   )}
 
-                  {explanation && (
+                  {questionData[currentQuestionIndex]?.explanation && (
                     <article className='mb-4'>
                       <h3 className='font-bold text-xl text-primary'>
                         Explicación
                       </h3>
-                      <p className='text-GrayD4'>{explanation}</p>
+                      <p className='text-GrayD4'>
+                        {questionData[currentQuestionIndex]?.explanation}
+                      </p>
                     </article>
                   )}
                 </>
@@ -210,17 +355,21 @@ export default function InterviewPage() {
             <button
               className='bg-primary text-white px-4 py-2 rounded-lg  hover:bg-secondary disabled:opacity-50 transition-colors duration-200'
               onClick={() => handleSubmit()}
-              disabled={loading || !answerIsSelected || submitted}
+              disabled={
+                loading ||
+                !questionData[currentQuestionIndex]?.answerIsSelected ||
+                questionData[currentQuestionIndex]?.submitted
+              }
             >
               Responder
             </button>
-            {submitted && (
+            {questionData[currentQuestionIndex]?.submitted && (
               <button
                 className='bg-primary text-white px-4 py-2 rounded-lg hover:bg-secondary disabled:opacity-50 transition-colors duration-200'
                 onClick={() => handleNewQuestion()}
                 disabled={loading}
               >
-                {currentQuestion === limit ? 'Finalizar' : 'Siguiente'}
+                {currentQuestionIndex + 1 === limit ? 'Finalizar' : 'Siguiente'}
               </button>
             )}
           </footer>

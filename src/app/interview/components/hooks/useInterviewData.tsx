@@ -1,143 +1,147 @@
 'used client'
 
 import fetchApiOpeniai from '@/app/services/fetch-api-routes-openiai'
+import { InterviewData, JobData, QuestionData } from '@/app/types/interview-key'
 import { SearchParamsInterview } from '@/app/types/search-params'
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 
 export default function useInterviewData({
   trainingData
 }: {
   trainingData: SearchParamsInterview
 }) {
-  const [question, setQuestion] = useState<string>('')
-  const [answers, setAnswers] = useState<string[]>([])
-  const [selectedAnswer, setSelectedAnswer] = useState<number>(NaN)
-  const [answerIsSelected, setAnswerIsSelected] = useState<boolean>(false)
-  const [answerStatus, setAnswerStatus] = useState<string>('')
-  const [correctAnswer, setCorrectAnswer] = useState<string>('')
-  const [explanation, setExplanation] = useState<string>('')
-  const [submitted, setSubmitted] = useState<boolean>(false)
-  const [loading, setLoading] = useState<boolean>(false)
-  const [currentQuestion, setCurrentQuestion] = useState<number>(1)
-  const [limit, setLimit] = useState<number>(5)
-  const [finished, setFinished] = useState<boolean>(false)
+  const [questionData, setQuestionData] = useState<QuestionData[]>([])
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0)
+  const [loading, setLoading] = useState(true)
+  const [finished, setFinished] = useState(false)
+  const [limit, setLimit] = useState<number>(3)
+  const [jobData, setJobData] = useState<JobData>()
 
-  const fetchData = async ({
-    trainingData
-  }: {
-    trainingData: SearchParamsInterview
-  }) => {
-    try {
-      setLoading(true)
-      const response = await fetchApiOpeniai({
-        searchParamsInterview: trainingData
-      })
+  const fetchData = useCallback(
+    async ({ trainingData }: { trainingData: SearchParamsInterview }) => {
+      try {
+        setLoading(true)
+        const response: InterviewData = await fetchApiOpeniai({
+          searchParamsInterview: trainingData
+        })
 
-      const completions = response.openAIResponse
+        const completions = response.openAIResponse
+        setJobData(response.jobData)
 
-      const questionStartIndex = completions.indexOf('Pregunta:')
-      const questionEndIndex = completions.indexOf('Respuestas:')
-      const answersEndIndex = completions.indexOf('Respuesta correcta')
-      const explanationIndex = completions.indexOf('Explicación:')
+        const questionStartIndex = completions.indexOf('Pregunta:')
+        const questionEndIndex = completions.indexOf('Respuestas:')
+        const answersEndIndex = completions.indexOf('Respuesta correcta')
+        const explanationIndex = completions.indexOf('Explicación:')
 
-      const questionText = completions
-        .substring(questionStartIndex, questionEndIndex)
-        .replace('Pregunta:', '')
-        .trim()
+        const questionText = completions
+          .substring(questionStartIndex, questionEndIndex)
+          .replace('Pregunta:', '')
+          .trim()
 
-      const answersText = completions
-        .substring(questionEndIndex, answersEndIndex)
-        .replace('Respuestas:', '')
-        .trim()
-        .split('\n')
-        .map((answer: string) => answer.trim())
-        .filter((answer: string) => answer !== '')
+        const answersText = completions
+          .substring(questionEndIndex, answersEndIndex)
+          .replace('Respuestas:', '')
+          .trim()
+          .split('\n')
+          .map((answer: string) => answer.trim())
+          .filter((answer: string) => answer !== '')
 
-      const answerCorrect = completions
-        .substring(answersEndIndex, explanationIndex)
-        .replace('Respuesta correcta:', '')
-        .trim()
+        const correctAnswer = completions
+          .substring(answersEndIndex, explanationIndex)
+          .replace('Respuesta correcta:', '')
+          .trim()
 
-      const explanationText = completions
-        .substring(explanationIndex)
-        .replace('Explicación:', '')
-        .trim()
+        const explanationText = completions
+          .substring(explanationIndex)
+          .replace('Explicación:', '')
+          .trim()
 
-      setCorrectAnswer(answerCorrect)
-      setExplanation(explanationText)
-      setQuestion(questionText)
-      setAnswers(answersText)
-      setLoading(false)
-    } catch (error) {
-      console.error(error)
-    }
-  }
+        const newQuestionData: QuestionData = {
+          question: questionText,
+          answers: answersText,
+          selectedAnswer: null,
+          answerStatus: '',
+          correctAnswer,
+          explanation: explanationText,
+          submitted: false,
+          answerIsSelected: false
+        }
 
-  useEffect(() => {
-    fetchData({ trainingData })
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+        setQuestionData([...questionData, newQuestionData])
+        setLoading(false)
+      } catch (error) {
+        console.error(error)
+        setLoading(false)
+      }
+    },
+    [questionData]
+  )
 
   const handleAnswerSelection = (index: number) => {
-    setSelectedAnswer(index)
-    setAnswerIsSelected(true)
+    const updatedQuestionData = [...questionData]
+    updatedQuestionData[currentQuestionIndex].selectedAnswer = index
+    updatedQuestionData[currentQuestionIndex].answerIsSelected = true
+    setQuestionData(updatedQuestionData)
   }
 
   const handleSubmit = () => {
-    setSubmitted(true)
+    const selectedAnswerIndex =
+      questionData[currentQuestionIndex].selectedAnswer
+    const formattedSelectedAnswer =
+      selectedAnswerIndex !== null
+        ? questionData[currentQuestionIndex].answers[
+            selectedAnswerIndex
+          ].substring(3)
+        : ''
+    const isCorrect =
+      formattedSelectedAnswer ===
+      questionData[currentQuestionIndex].correctAnswer
 
-    const formattedSelectedAnswer = answers[selectedAnswer].substring(3)
-
-    if (formattedSelectedAnswer == correctAnswer) {
-      setAnswerStatus('Correcto')
-    } else {
-      setAnswerStatus('Incorrecto')
-    }
+    const updatedQuestionData = [...questionData]
+    updatedQuestionData[currentQuestionIndex].submitted = true
+    updatedQuestionData[currentQuestionIndex].answerStatus = isCorrect
+      ? 'Correcto'
+      : 'Incorrecto'
+    setQuestionData(updatedQuestionData)
   }
 
   const handleNewQuestion = () => {
-    if (currentQuestion === limit) {
+    if (currentQuestionIndex + 1 === limit) {
       setFinished(true)
       return
     }
-    setCurrentQuestion(currentQuestion + 1)
-    setAnswers([])
-    setQuestion('')
-    setSelectedAnswer(NaN)
-    setAnswerStatus('')
-    setSubmitted(false)
-    setAnswerIsSelected(false)
-    fetchData({ trainingData })
+
+    setCurrentQuestionIndex(currentQuestionIndex + 1)
+    if (currentQuestionIndex + 1 === questionData.length) {
+      fetchData({
+        trainingData
+      })
+    }
   }
 
   const handleReset = () => {
-    setCurrentQuestion(1)
+    setQuestionData([])
+    setCurrentQuestionIndex(0)
     setFinished(false)
-    setAnswers([])
-    setQuestion('')
-    setSelectedAnswer(NaN)
-    setAnswerStatus('')
-    setSubmitted(false)
-    setAnswerIsSelected(false)
-    fetchData({ trainingData })
   }
 
+  useEffect(() => {
+    if (questionData.length === 0) {
+      fetchData({ trainingData })
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [questionData])
+
   return {
-    question,
-    answers,
-    selectedAnswer,
-    answerStatus,
-    explanation,
-    submitted,
+    questionData,
     loading,
-    answerIsSelected,
-    correctAnswer,
+    finished,
+    currentQuestionIndex,
+    limit,
     handleAnswerSelection,
     handleSubmit,
     handleNewQuestion,
-    currentQuestion,
-    limit,
-    finished,
-    handleReset
+    handleReset,
+    jobData
   }
 }
