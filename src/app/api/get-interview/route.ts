@@ -5,6 +5,7 @@ import { NextResponse } from 'next/server'
 import { getInterviewData } from '@/app/utils/get-interview-data'
 import OpenAI from 'openai'
 import { fetchApiInfojobsGetJob } from '@/app/services/fetch-api-infojobs'
+import { InterviewData } from '@/app/types/interview-key'
 
 const apiKeyOpenAI = process.env.OPENAI_API_KEY
 
@@ -27,16 +28,27 @@ export const GET = async (req: { url: string | URL }) => {
     selectedInterviewer
   )
 
-  const jobData: APIResultOffer = await fetchApiInfojobsGetJob({ selectedJob })
+  // const jobData: APIResultOffer = await fetchApiInfojobsGetJob({ selectedJob })
   // const openAIResponse = await getOpenAIResponse({
   //   interviewer: interviewPersonality,
   //   interviewType: interviewCharacteristics,
   //   jobData
   // })
 
+  const fetchCatRandom = async () => {
+    const response = await fetch(
+      `https://cat-fact.herokuapp.com/facts/random?animal_type=cat`
+    )
+    const data = await response.json()
+    return data
+  }
+
+  const catFacts = await fetchCatRandom()
+  const catText = catFacts.text
+
   const mockOpenAIResponse = `Pregunta:
 
-    ¡Hola! Imagina que eres un superhéroe del código y te encuentras en una misión para salvar el mundo de un caos digital. De repente, te enfrentas a un desafío técnico. ¿Cómo abordarías la situación?
+    ¡Hola! ${catText} Imagina que eres un superhéroe del código y te encuentras en una misión para salvar el mundo de un caos digital. De repente, te enfrentas a un desafío técnico. ¿Cómo abordarías la situación?
     
     Respuestas:
     
@@ -51,11 +63,11 @@ export const GET = async (req: { url: string | URL }) => {
     
     En situaciones de resolución de problemas complejos, es crucial analizar cuidadosamente los requisitos y diseñar una solución efectiva utilizando las últimas tendencias en tecnologías front-end, como se especifica en los requisitos del puesto. Llamar a un compañero, tomar un descanso o tener una epifanía pueden ser pasos posteriores, pero el análisis y diseño inicial son fundamentales.`
 
-  const interviewData = {
+  const interviewData: InterviewData = {
     jobData: {
-      title: jobData.title,
+      title: 'jobData.title',
       requirement:
-        jobData.requirementMin || jobData.minRequirements || jobData.description
+        'jobData.requirementMin || jobData.minRequirements || jobData.description'
     },
     openAIResponse: mockOpenAIResponse
   }
