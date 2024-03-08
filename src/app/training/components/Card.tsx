@@ -2,7 +2,7 @@ import { APIResultOffer } from '@/app/types/result-offer'
 
 export default function Card({ offer: offer }: { offer: APIResultOffer }) {
   return (
-    <article className='hover:animate-background  rounded-xl bg-gradient-to-r from-primary via-success to-secondary p-0.5  transition hover:via-primary hover:to-primary  hover:[animation-duration:_4s]'>
+    <article className='hover:animate-background rounded-xl bg-gradient-to-r from-primaryL1 via-success to-secondary p-0.5 transition hover:via-primaryL1 hover:to-primary animate-fade-in'>
       <div className='rounded-[10px] bg-white p-4  sm:p-6'>
         <a
           href={offer.link}

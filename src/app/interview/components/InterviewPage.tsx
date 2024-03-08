@@ -28,6 +28,14 @@ export default function InterviewPage() {
       return
     }
     setIndex(prev => prev + 1)
+
+    const current = document.querySelector('#question') as HTMLElement
+    if (current) {
+      current.classList.remove('animate-fade-in-right')
+      current.classList.remove('animate-fade-in-left')
+      void current.offsetWidth
+      current.classList.add('animate-fade-in-right')
+    }
   }
 
   const handlePrev = () => {
@@ -35,11 +43,18 @@ export default function InterviewPage() {
       return
     }
     setIndex(prev => prev - 1)
+    const current = document.querySelector('#question') as HTMLElement
+    if (current) {
+      current.classList.remove('animate-fade-in-right')
+      current.classList.remove('animate-fade-in-left')
+      void current.offsetWidth
+      current.classList.add('animate-fade-in-left')
+    }
   }
 
   return (
-    <div className='bg-GrayL3 min-h-screen py-8 px-4 max-sm:px-2 max-sm:py-4'>
-      <div className='max-w-screen-xl mx-auto bg-white shadow rounded-lg p-6'>
+    <div className='bg-GrayL3 min-h-screen py-8 px-4 max-sm:px-2 max-sm:py-4 h-full flex items-center'>
+      <div className='max-w-screen-xl mx-auto bg-white shadow rounded-lg sm:p-6 p-4 h-full w-full'>
         <header className='flex  justify-between gap-3 mb-4'>
           <div className='flex items-end sm:gap-3 sm:flex-row flex-col'>
             <Logo className='sm:w-52 w-32' />
@@ -59,7 +74,7 @@ export default function InterviewPage() {
             <h2 className='text-primary font-medium text-center text-xl sm:text-2xl '>
               ¡Felicidades! Has completado la entrevista.
             </h2>
-            <section className='flex gap-4 sm:justify-evenly  flex-wrap'>
+            <section className='flex gap-4 sm:justify-evenly flex-wrap'>
               <div className='flex items-center gap-2 flex-wrap'>
                 <h3 className='font-bold text-xl text-primary'>Resultados:</h3>
                 <ul className='flex gap-3'>
@@ -108,15 +123,15 @@ export default function InterviewPage() {
             </section>
             <section>
               <h3 className='font-bold text-xl text-primary'>Resumen</h3>
-              <div className='flex gap-3 justify-center items-center'>
+              <div className='flex gap-3 justify-center items-center py-2'>
                 <button
                   onClick={handlePrev}
                   disabled={pageNumber <= 0}
-                  className='bg-primary text-white px-4 py-2 rounded-lg  hover:bg-secondary disabled:opacity-50 transition-colors duration-200'
+                  className='bg-primary text-white px-2 py-2 rounded-lg hover:bg-secondary disabled:opacity-50 transition-colors duration-200'
                 >
-                  Anterior
+                  {'<'}
                 </button>
-                <article>
+                <article className='animate-fade-in-right' id='question'>
                   <h4 className='text-primaryL1 text-lg'>
                     {questionData[pageNumber]?.question}
                   </h4>
@@ -175,9 +190,9 @@ export default function InterviewPage() {
                 <button
                   onClick={handleNext}
                   disabled={pageNumber >= questionData.length - 1}
-                  className='bg-primary text-white px-4 py-2 rounded-lg  hover:bg-secondary disabled:opacity-50 transition-colors duration-200'
+                  className='bg-primary text-white px-2 py-2 rounded-lg hover:bg-secondary disabled:opacity-50 transition-colors duration-200'
                 >
-                  Siguiente
+                  {'>'}
                 </button>
               </div>
             </section>
@@ -224,7 +239,7 @@ export default function InterviewPage() {
                   <span className='sr-only'>Loading...</span>
                 </div>
               ) : (
-                <p className='text-GrayD4 text-lg'>
+                <p className='text-GrayD4 text-lg animate-fade-in'>
                   {questionData[currentQuestionIndex]?.question}
                 </p>
               )}
@@ -273,14 +288,16 @@ export default function InterviewPage() {
                 <ul>
                   {questionData[currentQuestionIndex]?.answers.map(
                     (answer, index) => (
-                      <li key={index} className='mb-2'>
+                      <li key={index} className='mb-2 animate-fade-in'>
                         <button
-                          className={`w-full p-4 text-lg text-start hover:scale-[1.03] disabled:opacity-65 duration-200 ${
+                          className={`w-full p-4 text-lg text-start hover:scale-[1.03] disabled:opacity-65 duration-200 
+                          ${
                             questionData[currentQuestionIndex]
                               .selectedAnswer === index
                               ? 'bg-primaryL1 text-white disabled:opacity-100'
                               : ''
-                          }`}
+                          } 
+                          `}
                           onClick={() => handleAnswerSelection(index)}
                           disabled={
                             questionData[currentQuestionIndex]?.submitted
@@ -295,48 +312,11 @@ export default function InterviewPage() {
                 </ul>
               )}
             </section>
-
-            <footer>
-              {questionData[currentQuestionIndex]?.submitted && (
-                <>
-                  {questionData[currentQuestionIndex]?.answerStatus && (
-                    <h3 className='font-bold mb-2 text-xl text-primary'>
-                      Respuesta seleccionada:{' '}
-                      <span className='text-secondary'>
-                        {questionData[currentQuestionIndex]?.answerStatus}
-                      </span>
-                    </h3>
-                  )}
-
-                  {questionData[currentQuestionIndex]?.correctAnswer && (
-                    <article className='mb-2'>
-                      <h3 className='font-bold  text-xl text-primary'>
-                        Respuesta correcta
-                      </h3>
-                      <p className='text-GrayD4'>
-                        {questionData[currentQuestionIndex]?.correctAnswer}
-                      </p>
-                    </article>
-                  )}
-
-                  {questionData[currentQuestionIndex]?.explanation && (
-                    <article className='mb-4'>
-                      <h3 className='font-bold text-xl text-primary'>
-                        Explicación
-                      </h3>
-                      <p className='text-GrayD4'>
-                        {questionData[currentQuestionIndex]?.explanation}
-                      </p>
-                    </article>
-                  )}
-                </>
-              )}
-            </footer>
           </main>
         )}
 
         {finished ? (
-          <footer className='flex gap-2'>
+          <footer className='flex gap-2 animate-fade-in'>
             <a
               href='/training'
               className='bg-primary text-white px-4 py-2 rounded-lg  hover:bg-secondary disabled:opacity-50 transition-colors duration-200'
@@ -351,7 +331,7 @@ export default function InterviewPage() {
             </button>
           </footer>
         ) : (
-          <footer className='flex gap-2'>
+          <footer className='flex gap-2 animate-fade-in'>
             <button
               className='bg-primary text-white px-4 py-2 rounded-lg  hover:bg-secondary disabled:opacity-50 transition-colors duration-200'
               onClick={() => handleSubmit()}

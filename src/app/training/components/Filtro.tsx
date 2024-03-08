@@ -72,7 +72,7 @@ export default function Filtro({
   const disableNext = page === totalPages
 
   return (
-    <header className='sticky top-0 bg-GrayL3'>
+    <header className='sticky top-0 bg-GrayL3 z-10'>
       <h3 className='font-medium text-xl'>Lista de Ofertas de trabajos:</h3>
       <div className='flex m-0 p-0 gap-4 justify-between items-center flex-col sm:flex-row'>
         <div className='flex m-0 p-0 gap-2 items-center'>
