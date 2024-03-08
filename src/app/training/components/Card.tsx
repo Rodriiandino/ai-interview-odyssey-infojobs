@@ -4,16 +4,16 @@ export default function Card({ offer: offer }: { offer: APIResultOffer }) {
   return (
     <article className='hover:animate-background rounded-xl bg-gradient-to-r from-primaryL1 via-success to-secondary p-0.5 transition hover:via-primaryL1 hover:to-primary animate-fade-in'>
       <div className='rounded-[10px] bg-white p-4  sm:p-6'>
-        <a
-          href={offer.link}
-          target='_blank'
-          rel='noreferrer noopener'
-          className='hover:underline'
-        >
-          <h3 className='mt-0.5 text-lg font-medium text-gray-900'>
+        <h3 className='mt-0.5 text-lg font-medium text-gray-900'>
+          <a
+            href={offer.link}
+            target='_blank'
+            rel='noreferrer noopener'
+            className='hover:underline'
+          >
             {offer.title}
-          </h3>
-        </a>
+          </a>
+        </h3>
         <span className=' text-gray-400 p-1'>{offer.id}</span>
 
         <p className='mt-1 text-sm text-gray-500'>{offer.requirementMin}</p>
