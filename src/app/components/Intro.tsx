@@ -8,7 +8,6 @@ export default function Intro() {
             <h1 className='text-3xl font-extrabold sm:text-5xl text-primary'>
               AI Interview
               <strong className='block font-extrabold text-primaryL1'>
-                {' '}
                 Odyssey.
               </strong>
             </h1>
