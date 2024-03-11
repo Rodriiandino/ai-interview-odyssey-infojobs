@@ -3,6 +3,7 @@
 import fetchApiOpeniai from '@/app/services/fetch-api-routes-openiai'
 import { InterviewData, JobData, QuestionData } from '@/app/types/interview-key'
 import { SearchParamsInterview } from '@/app/types/search-params'
+import processOpenAIResponse from '@/app/utils/process-open-ai-response'
 import { useCallback, useEffect, useState } from 'react'
 
 export default function useInterviewData({
@@ -15,7 +16,10 @@ export default function useInterviewData({
   const [loading, setLoading] = useState(true)
   const [finished, setFinished] = useState(false)
   const [limit, setLimit] = useState<number>(3)
-  const [jobData, setJobData] = useState<JobData>()
+  const [jobData, setJobData] = useState<JobData>({
+    title: '',
+    requirement: ''
+  })
 
   const fetchData = useCallback(
     async ({ trainingData }: { trainingData: SearchParamsInterview }) => {
@@ -28,44 +32,7 @@ export default function useInterviewData({
         const completions = response.openAIResponse
         setJobData(response.jobData)
 
-        const questionStartIndex = completions.indexOf('Pregunta:')
-        const questionEndIndex = completions.indexOf('Respuestas:')
-        const answersEndIndex = completions.indexOf('Respuesta correcta')
-        const explanationIndex = completions.indexOf('Explicación:')
-
-        const questionText = completions
-          .substring(questionStartIndex, questionEndIndex)
-          .replace('Pregunta:', '')
-          .trim()
-
-        const answersText = completions
-          .substring(questionEndIndex, answersEndIndex)
-          .replace('Respuestas:', '')
-          .trim()
-          .split('\n')
-          .map((answer: string) => answer.trim())
-          .filter((answer: string) => answer !== '')
-
-        const correctAnswer = completions
-          .substring(answersEndIndex, explanationIndex)
-          .replace('Respuesta correcta:', '')
-          .trim()
-
-        const explanationText = completions
-          .substring(explanationIndex)
-          .replace('Explicación:', '')
-          .trim()
-
-        const newQuestionData: QuestionData = {
-          question: questionText,
-          answers: answersText,
-          selectedAnswer: null,
-          answerStatus: '',
-          correctAnswer,
-          explanation: explanationText,
-          submitted: false,
-          answerIsSelected: false
-        }
+        const newQuestionData: QuestionData = processOpenAIResponse(completions)
 
         setQuestionData([...questionData, newQuestionData])
         setLoading(false)
