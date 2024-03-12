@@ -5,7 +5,7 @@ import {
 } from '@/app/types/training-key'
 import React from 'react'
 
-const Form: React.FC = () => {
+export default function Form() {
   return (
     <form action='/interview' className='mt-8' id='form'>
       <h3 className='font-medium text-xl'>Selecciona el entrevistador:</h3>
@@ -115,5 +115,3 @@ const Form: React.FC = () => {
     </form>
   )
 }
-
-export default Form
