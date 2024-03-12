@@ -1,4 +1,6 @@
 import { QuestionData } from '@/app/types/interview-key'
+import FinishedFooter from './FinishedFooter'
+import QuestionAndAnswersFooter from './QuestionAndAnswersFooter'
 
 interface FooterProps {
   finished: boolean
@@ -24,43 +26,16 @@ const Footer: React.FC<FooterProps> = ({
   return (
     <>
       {finished ? (
-        <footer className='flex gap-2 animate-fade-in'>
-          <a
-            href='/training'
-            className='bg-primary text-white px-4 py-2 rounded-lg  hover:bg-secondary disabled:opacity-50 transition-colors duration-200'
-          >
-            Volver
-          </a>
-          <button
-            className='bg-primary text-white px-4 py-2 rounded-lg  hover:bg-secondary disabled:opacity-50 transition-colors duration-200'
-            onClick={() => handleReset()}
-          >
-            Reiniciar
-          </button>
-        </footer>
+        <FinishedFooter handleReset={handleReset} />
       ) : (
-        <footer className='flex gap-2 animate-fade-in'>
-          <button
-            className='bg-primary text-white px-4 py-2 rounded-lg  hover:bg-secondary disabled:opacity-50 transition-colors duration-200'
-            onClick={() => handleSubmit()}
-            disabled={
-              loading ||
-              !questionData[currentQuestionIndex]?.answerIsSelected ||
-              questionData[currentQuestionIndex]?.submitted
-            }
-          >
-            Responder
-          </button>
-          {questionData[currentQuestionIndex]?.submitted && (
-            <button
-              className='bg-primary text-white px-4 py-2 rounded-lg hover:bg-secondary disabled:opacity-50 transition-colors duration-200'
-              onClick={() => handleNewQuestion()}
-              disabled={loading}
-            >
-              {currentQuestionIndex + 1 === limit ? 'Finalizar' : 'Siguiente'}
-            </button>
-          )}
-        </footer>
+        <QuestionAndAnswersFooter
+          loading={loading}
+          questionData={questionData}
+          currentQuestionIndex={currentQuestionIndex}
+          limit={limit}
+          handleSubmit={handleSubmit}
+          handleNewQuestion={handleNewQuestion}
+        />
       )}
     </>
   )

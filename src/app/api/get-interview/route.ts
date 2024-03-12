@@ -28,27 +28,17 @@ export const GET = async (req: { url: string | URL }) => {
     selectedInterviewer
   )
 
-  // const jobData: APIResultOffer = await fetchApiInfojobsGetJob({ selectedJob })
+  const jobData: APIResultOffer = await fetchApiInfojobsGetJob({ selectedJob })
+
   // const openAIResponse = await getOpenAIResponse({
   //   interviewer: interviewPersonality,
   //   interviewType: interviewCharacteristics,
   //   jobData
   // })
 
-  const fetchCatRandom = async () => {
-    const response = await fetch(
-      `https://cat-fact.herokuapp.com/facts/random?animal_type=cat`
-    )
-    const data = await response.json()
-    return data
-  }
-
-  const catFacts = await fetchCatRandom()
-  const catText = catFacts.text
-
   const mockOpenAIResponse = `Pregunta:
 
-    ¡Hola! ${catText} Imagina que eres un superhéroe del código y te encuentras en una misión para salvar el mundo de un caos digital. De repente, te enfrentas a un desafío técnico. ¿Cómo abordarías la situación?
+    ¡Hola! Imagina que eres un superhéroe del código y te encuentras en una misión para salvar el mundo de un caos digital. De repente, te enfrentas a un desafío técnico. ¿Cómo abordarías la situación?
     
     Respuestas:
     
@@ -65,9 +55,9 @@ export const GET = async (req: { url: string | URL }) => {
 
   const interviewData: InterviewData = {
     jobData: {
-      title: 'jobData.title',
+      title: jobData.title,
       requirement:
-        'jobData.requirementMin || jobData.minRequirements || jobData.description'
+        jobData.requirementMin || jobData.minRequirements || jobData.description
     },
     openAIResponse: mockOpenAIResponse
   }
