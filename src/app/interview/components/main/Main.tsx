@@ -1,31 +1,23 @@
-import { JobData, QuestionData } from '@/app/types/interview-key'
-import { SearchParamsInterview } from '@/app/types/search-params'
+'use client'
+
 import FinishedInterview from './FinishedInterview'
 import QuestionAndAnswers from './QuestionAndAnswers'
+import { useInterviewContext } from '../../context/interview-context'
+import { useTrainingContext } from '../../context/training-context'
 
-interface MainProps {
-  finished: boolean
-  questionData: QuestionData[]
-  trainingData: SearchParamsInterview
-  jobData: JobData
-  interviewCharacteristics: string
-  interviewPersonality: string
-  loading: boolean
-  currentQuestionIndex: number
-  handleAnswerSelection: (index: number) => void
-}
+export default function Main() {
+  const {
+    questionData,
+    currentQuestionIndex,
+    handleAnswerSelection,
+    loading,
+    finished,
+    jobData
+  } = useInterviewContext()
 
-const Main: React.FC<MainProps> = ({
-  finished,
-  questionData,
-  trainingData,
-  jobData,
-  interviewCharacteristics,
-  interviewPersonality,
-  loading,
-  currentQuestionIndex,
-  handleAnswerSelection
-}) => {
+  const { interviewCharacteristics, interviewPersonality, trainingData } =
+    useTrainingContext()
+
   return (
     <>
       {finished ? (
@@ -48,5 +40,3 @@ const Main: React.FC<MainProps> = ({
     </>
   )
 }
-
-export default Main

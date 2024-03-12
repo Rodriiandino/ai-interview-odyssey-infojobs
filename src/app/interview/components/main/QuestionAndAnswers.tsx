@@ -11,7 +11,7 @@ interface QuestionAndAnswersProps {
   handleAnswerSelection: (index: number) => void
 }
 
-const QuestionAndAnswers: React.FC<QuestionAndAnswersProps> = ({
+export default function QuestionAndAnswers({
   loading,
   currentQuestionIndex,
   questionData,
@@ -19,7 +19,7 @@ const QuestionAndAnswers: React.FC<QuestionAndAnswersProps> = ({
   interviewCharacteristics,
   interviewPersonality,
   handleAnswerSelection
-}) => {
+}: QuestionAndAnswersProps) {
   return (
     <main>
       <header className='mb-4'>
@@ -131,5 +131,3 @@ const QuestionAndAnswers: React.FC<QuestionAndAnswersProps> = ({
     </main>
   )
 }
-
-export default QuestionAndAnswers

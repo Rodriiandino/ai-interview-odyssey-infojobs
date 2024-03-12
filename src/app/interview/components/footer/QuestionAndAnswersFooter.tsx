@@ -9,14 +9,14 @@ interface QuestionAndAnswersFooterProps {
   handleNewQuestion: () => void
 }
 
-const QuestionAndAnswersFooter: React.FC<QuestionAndAnswersFooterProps> = ({
+export default function QuestionAndAnswersFooter({
   loading,
   questionData,
   currentQuestionIndex,
   limit,
   handleSubmit,
   handleNewQuestion
-}) => {
+}: QuestionAndAnswersFooterProps) {
   return (
     <footer className='flex gap-2 animate-fade-in'>
       <button
@@ -42,5 +42,3 @@ const QuestionAndAnswersFooter: React.FC<QuestionAndAnswersFooterProps> = ({
     </footer>
   )
 }
-
-export default QuestionAndAnswersFooter

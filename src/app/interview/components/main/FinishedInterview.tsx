@@ -1,4 +1,4 @@
-'use Client'
+'use client'
 
 import { JobData, QuestionData } from '@/app/types/interview-key'
 import { SearchParamsInterview } from '@/app/types/search-params'
@@ -10,11 +10,11 @@ interface FinishedInterviewProps {
   jobData: JobData
 }
 
-const FinishedInterview: React.FC<FinishedInterviewProps> = ({
+export default function FinishedInterview({
   questionData,
   trainingData,
   jobData
-}) => {
+}: FinishedInterviewProps) {
   const [pageNumber, setIndex] = useState(0)
 
   const handleNext = () => {
@@ -170,5 +170,3 @@ const FinishedInterview: React.FC<FinishedInterviewProps> = ({
     </main>
   )
 }
-
-export default FinishedInterview

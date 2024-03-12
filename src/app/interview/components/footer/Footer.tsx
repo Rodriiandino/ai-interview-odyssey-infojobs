@@ -1,28 +1,21 @@
-import { QuestionData } from '@/app/types/interview-key'
+'use client'
+
 import FinishedFooter from './FinishedFooter'
 import QuestionAndAnswersFooter from './QuestionAndAnswersFooter'
+import { useInterviewContext } from '../../context/interview-context'
 
-interface FooterProps {
-  finished: boolean
-  handleReset: () => void
-  handleSubmit: () => void
-  loading: boolean
-  questionData: QuestionData[]
-  currentQuestionIndex: number
-  limit: number
-  handleNewQuestion: () => void
-}
+export default function Footer() {
+  const {
+    questionData,
+    currentQuestionIndex,
+    limit,
+    loading,
+    finished,
+    handleSubmit,
+    handleNewQuestion,
+    handleReset
+  } = useInterviewContext()
 
-const Footer: React.FC<FooterProps> = ({
-  finished,
-  handleReset,
-  handleSubmit,
-  loading,
-  questionData,
-  currentQuestionIndex,
-  limit,
-  handleNewQuestion
-}) => {
   return (
     <>
       {finished ? (
@@ -40,5 +33,3 @@ const Footer: React.FC<FooterProps> = ({
     </>
   )
 }
-
-export default Footer

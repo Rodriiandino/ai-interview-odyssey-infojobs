@@ -5,12 +5,9 @@ import { InterviewData, JobData, QuestionData } from '@/app/types/interview-key'
 import { SearchParamsInterview } from '@/app/types/search-params'
 import processOpenAIResponse from '@/app/utils/process-open-ai-response'
 import { useCallback, useEffect, useState } from 'react'
+import { useTrainingContext } from '../training-context'
 
-export default function useInterviewData({
-  trainingData
-}: {
-  trainingData: SearchParamsInterview
-}) {
+export default function useInterviewData() {
   const [questionData, setQuestionData] = useState<QuestionData[]>([])
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0)
   const [loading, setLoading] = useState(true)
@@ -20,6 +17,8 @@ export default function useInterviewData({
     title: '',
     requirement: ''
   })
+
+  const { trainingData } = useTrainingContext()
 
   const fetchData = useCallback(
     async ({ trainingData }: { trainingData: SearchParamsInterview }) => {

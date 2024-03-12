@@ -2,7 +2,7 @@ interface FinishedFooterProps {
   handleReset: () => void
 }
 
-const FinishedFooter: React.FC<FinishedFooterProps> = ({ handleReset }) => {
+export default function FinishedFooter({ handleReset }: FinishedFooterProps) {
   return (
     <footer className='flex gap-2 animate-fade-in'>
       <a
@@ -20,5 +20,3 @@ const FinishedFooter: React.FC<FinishedFooterProps> = ({ handleReset }) => {
     </footer>
   )
 }
-
-export default FinishedFooter
