@@ -1,5 +1,6 @@
 import { QuestionData } from '@/app/types/interview-key'
 import { SearchParamsInterview } from '@/app/types/search-params'
+import InterviewAccordion from './InterviewAccordion'
 
 interface QuestionAndAnswersProps {
   loading: boolean
@@ -21,12 +22,16 @@ export default function QuestionAndAnswers({
   handleAnswerSelection
 }: QuestionAndAnswersProps) {
   return (
-    <main>
-      <header className='mb-4'>
+    <main className='flex flex-col justify-center w-full h-full gap-4'>
+      <InterviewAccordion title='Características de la entrevista'>
         <h3 className='mb-2 text-primaryL1 font-bold text-lg'>
           Tipo de Entrevista:{' '}
           <span className='text-GrayD4 font-medium'>
-            {trainingData.interviewType}{' '}
+            {trainingData.interviewType === 'technical'
+              ? 'Técnica'
+              : trainingData.interviewType === 'behavioral'
+              ? 'Conceptual'
+              : 'Resolución de problemas'}{' '}
             <small className='opacity-85 text-GrayD4'>
               ({interviewCharacteristics})
             </small>
@@ -41,8 +46,8 @@ export default function QuestionAndAnswers({
             </small>
           </span>
         </h3>
-      </header>
-      <section className='mb-4'>
+      </InterviewAccordion>
+      <section>
         <h3 className='font-bold mb-2 text-xl text-primary'>Enunciado</h3>
         {loading ? (
           <div role='status' className='space-y-2.5 animate-pulse max-w-lg'>
@@ -64,7 +69,7 @@ export default function QuestionAndAnswers({
           </p>
         )}
       </section>
-      <section className='mb-4'>
+      <section>
         <h3 className='font-bold mb-2 text-xl text-primary'>Respuestas</h3>
 
         {loading ? (
