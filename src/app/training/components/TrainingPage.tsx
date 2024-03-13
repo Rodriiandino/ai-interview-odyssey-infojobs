@@ -1,7 +1,7 @@
 import ListJobOffers from './ListJobOffers'
 import { BaseSearchParams } from '@/app/types/search-params'
 import { Suspense } from 'react'
-import Loading from '../loading'
+import Loading from './loading'
 import Form from './Form'
 import Header from './Header'
 
@@ -21,11 +21,11 @@ export default function TrainingPage({
         <Form />
       </section>
 
-      <Suspense fallback={<Loading />}>
-        <section className='max-w-3xl mx-auto mt-8 w-full h-full sm:overflow-hidden sm:overflow-y-scroll'>
+      <section className='max-w-3xl mx-auto mt-8 w-full h-full sm:overflow-hidden sm:overflow-y-scroll'>
+        <Suspense fallback={<Loading />}>
           <ListJobOffers params={searchParams} />
-        </section>
-      </Suspense>
+        </Suspense>
+      </section>
     </main>
   )
 }

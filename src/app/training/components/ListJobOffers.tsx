@@ -9,7 +9,7 @@ import {
   CombinedSearchParams
 } from '@/app/types/search-params'
 import { Suspense } from 'react'
-import Loading from '../loading'
+import Loading from './loading'
 
 export default async function ListJobOffers({
   params: params
