@@ -68,7 +68,7 @@ export default function FinishedInterview({
               <h3 className='font-bold sm:text-xl text-lg text-primary'>
                 Resultados:
               </h3>
-              <ul className='flex gap-3'>
+              <ul className='flex gap-3 flex-wrap'>
                 {questionData.map((question, index) => (
                   <li key={index}>
                     <h4 className='font-bold text-primaryL1 sm:text-base text-sm'>
@@ -128,14 +128,14 @@ export default function FinishedInterview({
             {'<'}
           </button>
           <article className='animate-fade-in-right' id='question'>
-            <h4 className='text-primaryL1 text-lg'>
+            <h4 className='text-primaryL1 sm:text-lg'>
               {questionData[pageNumber]?.question}
             </h4>
             <ul>
               {questionData[pageNumber]?.answers.map((answer, index) => (
                 <li key={index} className='mb-2'>
                   <button
-                    className={`w-full p-2 text-lg text-start hover:scale-[1.01] disabled:opacity-65 duration-200
+                    className={`w-full p-2 sm:text-lg text-start hover:scale-[1.01] disabled:opacity-65 duration-200
                             ${
                               questionData[pageNumber]?.selectedAnswer ===
                                 index &&

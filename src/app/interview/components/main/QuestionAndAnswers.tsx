@@ -64,7 +64,7 @@ export default function QuestionAndAnswers({
             <span className='sr-only'>Loading...</span>
           </div>
         ) : (
-          <p className='text-GrayD4 text-lg animate-fade-in'>
+          <p className='text-GrayD4 sm:text-lg animate-fade-in'>
             {questionData[currentQuestionIndex]?.question}
           </p>
         )}
@@ -113,7 +113,7 @@ export default function QuestionAndAnswers({
               (answer, index) => (
                 <li key={index} className='mb-2 animate-fade-in'>
                   <button
-                    className={`w-full p-4 text-lg text-start hover:scale-[1.03] disabled:opacity-65 duration-200 
+                    className={`w-full p-4 sm:text-lg text-start hover:scale-[1.03] disabled:opacity-65 duration-200 
                         ${
                           questionData[currentQuestionIndex].selectedAnswer ===
                           index
