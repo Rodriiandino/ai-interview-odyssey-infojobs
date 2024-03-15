@@ -3,6 +3,7 @@
 import { JobData, QuestionData } from '@/app/types/interview-key'
 import { createContext, useContext } from 'react'
 import useInterviewData from './hooks/useInterviewData'
+import useInterviewDataMock from './hooks/useInterviewDataMock'
 
 type InterviewDataContext = {
   questionData: QuestionData[]
@@ -26,7 +27,8 @@ export const InterviewContext = createContext<InterviewDataContext | null>(null)
 export default function InterviewDataProvider({
   children
 }: InterviewDataContextProviderProps) {
-  const interviewData = useInterviewData()
+  // const interviewData = useInterviewData()
+  const interviewData = useInterviewDataMock()
 
   return (
     <InterviewContext.Provider value={interviewData}>

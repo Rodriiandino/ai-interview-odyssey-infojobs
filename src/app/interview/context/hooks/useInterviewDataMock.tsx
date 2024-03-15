@@ -1,11 +1,9 @@
 'used client'
 
-import fetchApiOpeniai from '@/app/services/fetch-api-routes-openiai'
-import { InterviewData, JobData, QuestionData } from '@/app/types/interview-key'
-import { SearchParamsInterview } from '@/app/types/search-params'
+import { JobData, QuestionData } from '@/app/types/interview-key'
 import processOpenAIResponse from '@/app/utils/process-open-ai-response'
 import { useCallback, useEffect, useState } from 'react'
-import { useTrainingContext } from '../training-context'
+import { mockOpenAIResponse } from '@/app/mock/mock-openai-response'
 
 export default function useInterviewData() {
   const [questionData, setQuestionData] = useState<QuestionData[]>([])
@@ -16,33 +14,30 @@ export default function useInterviewData() {
     title: '',
     requirement: ''
   })
-
+  const [indexMock, setIndexMock] = useState(0)
   const limit = 5
 
-  const { trainingData } = useTrainingContext()
+  const fetchData = useCallback(async () => {
+    try {
+      setLoading(true)
+      const completions = mockOpenAIResponse[indexMock]
+      setIndexMock(indexMock + 1)
 
-  const fetchData = useCallback(
-    async ({ trainingData }: { trainingData: SearchParamsInterview }) => {
-      try {
-        setLoading(true)
-        const response: InterviewData = await fetchApiOpeniai({
-          searchParamsInterview: trainingData
-        })
+      const newQuestionData: QuestionData = processOpenAIResponse(completions)
 
-        const completions = response.openAIResponse
-        setJobData(response.jobData)
+      setJobData({
+        title: 'Desarrollador Java Springboot (100% Remoto)',
+        requirement:
+          '-Perfil Back end orientado a Microservicios - Experiencia de consolidad en desarrollo de software con Java Spring Boot, API Rest, Swagger, Postman.'
+      })
 
-        const newQuestionData: QuestionData = processOpenAIResponse(completions)
-
-        setQuestionData([...questionData, newQuestionData])
-        setLoading(false)
-      } catch (error) {
-        console.error(error)
-        setLoading(false)
-      }
-    },
-    [questionData]
-  )
+      setQuestionData([...questionData, newQuestionData])
+      setLoading(false)
+    } catch (error) {
+      console.error(error)
+      setLoading(false)
+    }
+  }, [indexMock, questionData])
 
   const handleAnswerSelection = (index: number) => {
     const updatedQuestionData = [...questionData]
@@ -80,7 +75,7 @@ export default function useInterviewData() {
         return newIndex - 1
       } else {
         if (newIndex === questionData.length) {
-          fetchData({ trainingData })
+          fetchData()
         }
       }
       return newIndex
@@ -92,11 +87,12 @@ export default function useInterviewData() {
     setCurrentQuestionIndex(0)
     setFinished(false)
     setLoading(true)
+    setIndexMock(0)
   }
 
   useEffect(() => {
     if (questionData.length === 0) {
-      fetchData({ trainingData })
+      fetchData()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [questionData])
