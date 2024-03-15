@@ -2,6 +2,7 @@
 
 import { Logo } from './Logo'
 import { useInterviewContext } from '../context/interview-context'
+import Link from 'next/link'
 
 export default function Header() {
   const { currentQuestionIndex, limit } = useInterviewContext()
@@ -9,7 +10,9 @@ export default function Header() {
   return (
     <header className='flex  justify-between gap-3 mb-4'>
       <div className='flex items-end sm:gap-3 sm:flex-row flex-col'>
-        <Logo className='sm:w-52 w-32' />
+        <Link href='/'>
+          <Logo className='sm:w-52 w-32' />
+        </Link>
         <h1 className='sm:text-3xl font-bold text-GrayL2 text-2xl'>
           Entrevista
         </h1>
