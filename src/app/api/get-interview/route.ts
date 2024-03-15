@@ -12,60 +12,55 @@ const apiKeyOpenAI = process.env.OPENAI_API_KEY
 const openai = new OpenAI({ apiKey: apiKeyOpenAI })
 
 export const GET = async (req: { url: string | URL }) => {
-  const { searchParams } = new URL(req.url)
-
-  const selectedInterviewType = searchParams.get(
-    SearchParamsInterviewKeys.InterviewType
-  ) as InterviewType
-  const selectedInterviewer = searchParams.get(
-    SearchParamsInterviewKeys.Interviewer
-  ) as Interviewer
-
-  const selectedJob: string = searchParams.get(SearchParamsInterviewKeys.JobId)!
-
-  const { interviewCharacteristics, interviewPersonality } = getInterviewData(
-    selectedInterviewType,
-    selectedInterviewer
-  )
-
-  const jobData: APIResultOffer = await fetchApiInfojobsGetJob({ selectedJob })
-
-  // const openAIResponse = await getOpenAIResponse({
-  //   interviewer: interviewPersonality,
-  //   interviewType: interviewCharacteristics,
-  //   jobData
-  // })
-
-  const mockOpenAIResponse = `Pregunta:
-
-    ¡Hola! Imagina que eres un superhéroe del código y te encuentras en una misión para salvar el mundo de un caos digital. De repente, te enfrentas a un desafío técnico. ¿Cómo abordarías la situación?
-    
-    Respuestas:
-    
-    1. Llamaría a mi fiel compañero, el "Debugger Man", para que me ayude a rastrear el problema.
-    2. Analizaría detenidamente los requisitos y diseñaría una solución utilizando las últimas tendencias en tecnologías front-end.
-    3. Haría una pausa para tomar una taza de café y dejar que mi mente brillante encuentre la solución.
-    4. Gritaría "¡Eureka!" y comenzaría a escribir código a toda velocidad mientras bailo la canción del éxito.
-    
-    Respuesta correcta: Analizaría detenidamente los requisitos y diseñaría una solución utilizando las últimas tendencias en tecnologías front-end.
-    
-    Explicación:
-    
-    En situaciones de resolución de problemas complejos, es crucial analizar cuidadosamente los requisitos y diseñar una solución efectiva utilizando las últimas tendencias en tecnologías front-end, como se especifica en los requisitos del puesto. Llamar a un compañero, tomar un descanso o tener una epifanía pueden ser pasos posteriores, pero el análisis y diseño inicial son fundamentales.`
-
-  const interviewData: InterviewData = {
-    jobData: {
-      title: jobData.title,
-      requirement:
-        jobData.requirementMin || jobData.minRequirements || jobData.description
-    },
-    openAIResponse: mockOpenAIResponse
-  }
-
   try {
+    const { searchParams } = new URL(req.url)
+
+    const selectedInterviewType = searchParams.get(
+      SearchParamsInterviewKeys.InterviewType
+    ) as InterviewType
+    const selectedInterviewer = searchParams.get(
+      SearchParamsInterviewKeys.Interviewer
+    ) as Interviewer
+
+    const selectedJob = searchParams.get(SearchParamsInterviewKeys.JobId)
+
+    if (!selectedInterviewType || !selectedInterviewer || !selectedJob) {
+      throw new Error('Parámetros de búsqueda incompletos')
+    }
+
+    const { interviewCharacteristics, interviewPersonality } = getInterviewData(
+      selectedInterviewType,
+      selectedInterviewer
+    )
+
+    const jobData: APIResultOffer = await fetchApiInfojobsGetJob({
+      selectedJob
+    })
+
+    if (!jobData) {
+      throw new Error('No se pudo obtener los datos del trabajo')
+    }
+
+    const openAIResponse = await getOpenAIResponse({
+      interviewer: interviewPersonality,
+      interviewType: interviewCharacteristics,
+      jobData
+    })
+
+    const interviewData: InterviewData = {
+      jobData: {
+        title: jobData.title,
+        requirement:
+          jobData.requirementMin ||
+          jobData.minRequirements ||
+          jobData.description
+      },
+      openAIResponse
+    }
+
     return NextResponse.json(interviewData)
-  } catch (error) {
-    console.error('Error:', error)
+  } catch (error: any) {
+    return NextResponse.json({ error: error.message }, { status: 500 })
   }
 }
 
@@ -77,7 +72,7 @@ const getOpenAIResponse = async ({
   interviewType: string
   interviewer: string
   jobData: APIResultOffer
-}) => {
+}): Promise<string> => {
   const prompt = `Como entrevistador, tu tarea es llevar a cabo una entrevista del tipo ${interviewType}, adoptando la personalidad del entrevistador ${interviewer}. Nos enfocaremos en los requisitos del puesto y los detalles laborales proporcionados. El trabajo requiere lo siguiente:
 
 
@@ -87,11 +82,9 @@ const getOpenAIResponse = async ({
   }
   
   
-  Debes crear una pregunta y cuatro posibles respuestas, con solo una correcta, siguiendo el siguiente formato:
-  
-  
+  Debes crear una pregunta y cuatro posibles respuestas, con solo una correcta, siguiendo el siguiente formato deseado:
+
   Pregunta:
-  
   
   Respuestas:
   1.
@@ -99,32 +92,32 @@ const getOpenAIResponse = async ({
   3.
   4.
   
-  
   Respuesta correcta:
-  
-  
+
   Explicación:
   
-  
   Asegúrate de cumplir con los requisitos siguientes:
-  
-  
   
   1. Garantizar que solo haya una respuesta correcta y que el orden sea aleatorio.
   2. Seguir el formato de pregunta y respuestas indicado.
   3. Adaptar la pregunta y las respuestas a la personalidad del entrevistador y al tipo de entrevista.
   4. las respuestas deben ser coherentes con los requisitos del puesto y los detalles laborales proporcionados.
   `
-  const completion = await openai.completions.create({
-    model: 'gpt-3.5-turbo',
-    prompt: prompt,
-    temperature: 0.2,
-    max_tokens: 100
-  })
 
-  const openAIResponse = completion.choices[0].text
-
-  if (openAIResponse) {
-    return openAIResponse
+  try {
+    const completion = await openai.completions.create({
+      model: 'gpt-3.5-turbo',
+      prompt: prompt,
+      temperature: 0.4,
+      max_tokens: 500
+    })
+    const openAIResponse = completion.choices[0].text.trim()
+    if (openAIResponse) {
+      return openAIResponse
+    } else {
+      throw new Error('No se ha podido obtener una respuesta de OpenAI')
+    }
+  } catch (error) {
+    throw new Error(`Error al obtener la respuesta de OpenAI: ${error}`)
   }
 }
