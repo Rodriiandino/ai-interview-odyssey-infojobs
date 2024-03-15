@@ -1,6 +1,12 @@
+'use client'
+
 import { APIResultOffer } from '@/app/types/result-offer'
 
 export default function Card({ offer: offer }: { offer: APIResultOffer }) {
+  const handleCopy = () => {
+    navigator.clipboard.writeText(offer.id)
+  }
+
   return (
     <article className='hover:animate-background rounded-xl bg-gradient-to-r from-primaryL1 via-success to-secondary p-0.5 transition hover:via-primaryL1 hover:to-primary animate-fade-in'>
       <div className='rounded-[10px] bg-white p-4  sm:p-6'>
@@ -14,7 +20,15 @@ export default function Card({ offer: offer }: { offer: APIResultOffer }) {
             {offer.title}
           </a>
         </h3>
-        <span className=' text-gray-400 p-1'>{offer.id}</span>
+        <div>
+          <span className=' text-gray-400 p-1'>{offer.id}</span>
+          <button
+            className='text-xs text-GrayL2 hover:text-primaryL1'
+            onClick={handleCopy}
+          >
+            copiar
+          </button>
+        </div>
 
         <p className='mt-1 text-sm text-gray-500'>{offer.requirementMin}</p>
 
