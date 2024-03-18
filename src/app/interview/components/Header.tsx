@@ -1,7 +1,7 @@
 'use client'
 
 import { Logo } from './Logo'
-import { useInterviewContext } from '../context/interview-context'
+import { useInterviewContext } from './context/interview-context'
 import Link from 'next/link'
 
 export default function Header() {

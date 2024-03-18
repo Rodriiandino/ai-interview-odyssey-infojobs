@@ -2,7 +2,7 @@
 
 import FinishedFooter from './FinishedFooter'
 import QuestionAndAnswersFooter from './QuestionAndAnswersFooter'
-import { useInterviewContext } from '../../context/interview-context'
+import { useInterviewContext } from '.././context/interview-context'
 
 export default function Footer() {
   const {

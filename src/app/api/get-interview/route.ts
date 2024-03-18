@@ -1,7 +1,7 @@
 import { InterviewType, Interviewer } from '@/app/types/training-key'
 import { SearchParamsInterviewKeys } from '@/app/types/interview-key'
 import { APIResultOffer } from '@/app/types/result-offer'
-import { NextResponse } from 'next/server'
+import { NextRequest, NextResponse } from 'next/server'
 import { getInterviewData } from '@/app/utils/get-interview-data'
 import OpenAI from 'openai'
 import { fetchApiInfojobsGetJob } from '@/app/services/fetch-api-infojobs'
@@ -11,7 +11,7 @@ const apiKeyOpenAI = process.env.OPENAI_API_KEY
 
 const openai = new OpenAI({ apiKey: apiKeyOpenAI })
 
-export const GET = async (req: { url: string | URL }) => {
+export const GET = async (req: NextRequest) => {
   try {
     const { searchParams } = new URL(req.url)
 

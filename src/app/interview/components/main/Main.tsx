@@ -2,8 +2,8 @@
 
 import FinishedInterview from './FinishedInterview'
 import QuestionAndAnswers from './QuestionAndAnswers'
-import { useInterviewContext } from '../../context/interview-context'
-import { useTrainingContext } from '../../context/training-context'
+import { useInterviewContext } from '.././context/interview-context'
+import { useTrainingContext } from '.././context/training-context'
 
 export default function Main() {
   const {
