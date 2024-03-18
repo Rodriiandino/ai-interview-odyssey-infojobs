@@ -1,36 +1,48 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Simulador de Entrevistas Utilizando las APIs de InfoJobs y OpenAI
+## AI Interview Odyssey!
+(En la demo que se mustra se utiliza una version simulada para no consumir los costes de la api de OpenAI)
 
-## Getting Started
+![266shots_so](https://github.com/Rodriiandino/ai-interview-odyssey-infojobs/assets/106351323/7f898114-f92f-4348-ae50-621dcff11733)
 
-First, run the development server:
+<hr>
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Es una aplicación web desarrollada con Next.js que utiliza las APIs de InfoJobs y OpenAI para simular entrevistas de trabajo. La aplicación permite al usuario elegir la personalidad del entrevistador, el tipo de entrevista y la oferta de trabajo deseada. En base a estos parámetros, la inteligencia artificial genera preguntas y respuestas, proporcionando al usuario una experiencia simulada de entrevista.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Tecnologías
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- React.js
+- Next.js
+- Tailwind CSS
+- TypeScript
+- Lodash
+- OpenAI API
+- InfoJobs API
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+<hr>
 
-## Learn More
+![688shots_so](https://github.com/Rodriiandino/ai-interview-odyssey-infojobs/assets/106351323/50ee8937-9dff-4929-a435-c10bb4687c87)
 
-To learn more about Next.js, take a look at the following resources:
+<hr>
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Funcionalidades
+- Generación de preguntas y respuestas utilizando la API de OpenAI.
+- Integración con la API de InfoJobs para obtener ofertas de trabajo.
+- Personalización de la personalidad del entrevistador y el tipo de entrevista.
+- Interfaz de usuario intuitiva y fácil de usar, basado en el diseño de Infojobs.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+<hr>
 
-## Deploy on Vercel
+![418shots_so](https://github.com/Rodriiandino/ai-interview-odyssey-infojobs/assets/106351323/11b8ea95-db9c-47a8-896d-4313ec5f1143)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+<hr>
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+### Cómo Ejecutar
+- Clona este repositorio en tu máquina local.
+- En el archivo .env.local colocas tu variables de entorno 
+- En el archivo interview-context.tsx descomentas "`const interviewData = useInterviewData()`" y comentas o eliminas la linea "`const interviewData = useInterviewDataMock()`"
+- Ejecuta `npm install` para instalar las dependencias.
+- Ejecuta `npm run dev` para iniciar la aplicación en modo de desarrollo.
+- Abre tu navegador y visita el localhost, en el puerto en que se levanto.
+- Y disfruta!!
+
+  ![923shots_so](https://github.com/Rodriiandino/ai-interview-odyssey-infojobs/assets/106351323/a11117c5-24db-4f16-808a-8647abd61cb4)
