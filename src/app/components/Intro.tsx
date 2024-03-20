@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { Github } from './Github'
 
 export default function Intro() {
   return (
@@ -20,13 +21,23 @@ export default function Intro() {
               listo para una aventura caprichosa como ninguna otra?
             </p>
 
-            <div className='mt-8 flex justify-center items-center sm:items-start sm:justify-normal'>
+            <div className='mt-8 flex justify-center items-center sm:justify-between gap-3'>
               <Link
                 href='/training'
-                className='block rounded-lg bg-primary px-12 py-3 text-sm font-medium text-white shadow hover:bg-secondary transition-colors duration-200 focus:outline-none focus:ring active:bg-rose-500 sm:w-auto'
+                className='block rounded-lg bg-primary px-12 py-3 text-sm font-medium text-white shadow hover:bg-secondary transition-colors duration-200 focus:outline-none focus:ring sm:w-auto ring-primaryL1'
               >
                 Comenzar
               </Link>
+
+              <a
+                href='https://github.com/Rodriiandino/ai-interview-odyssey-infojobs'
+                className='block rounded-lg bg-white px-3 py-3 shadow hover:bg-gray-100 transition-colors duration-200 focus:outline-none focus:ring ring-primaryL1 active:bg-gray-200 sm:w-auto opacity-55'
+                target='_blank'
+                rel='noopener noreferrer'
+                aria-label='Github Repository'
+              >
+                <Github className='inline-block' />
+              </a>
             </div>
           </div>
         </div>
