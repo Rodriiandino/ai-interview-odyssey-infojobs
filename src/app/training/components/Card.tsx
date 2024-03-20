@@ -21,7 +21,9 @@ export default function Card({ offer: offer }: { offer: APIResultOffer }) {
           </a>
         </h3>
         <div>
-          <span className=' text-gray-400 p-1'>{offer.id}</span>
+          <span className=' text-gray-500 p-1 text-wrap break-words'>
+            {offer.id}
+          </span>
           <button
             className='text-xs text-GrayL2 hover:text-primaryL1'
             onClick={handleCopy}
