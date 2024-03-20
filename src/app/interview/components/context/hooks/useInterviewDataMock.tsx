@@ -32,7 +32,10 @@ export default function useInterviewData() {
       })
 
       setQuestionData([...questionData, newQuestionData])
-      setLoading(false)
+
+      setTimeout(() => {
+        setLoading(false)
+      }, 200)
     } catch (error) {
       console.error(error)
       setLoading(false)
