@@ -17,6 +17,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang='es'>
+      <head>
+        <script src='https://unpkg.com/react-scan/dist/auto.global.js' async />
+      </head>
       <body className={onest.className}>{children}</body>
     </html>
   )

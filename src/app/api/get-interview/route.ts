@@ -3,13 +3,10 @@ import { SearchParamsInterviewKeys } from '@/app/types/interview-key'
 import { APIResultOffer } from '@/app/types/result-offer'
 import { NextRequest, NextResponse } from 'next/server'
 import { getInterviewData } from '@/app/utils/get-interview-data'
-import OpenAI from 'openai'
+import { createOpenAI } from '@ai-sdk/openai'
+import { generateText } from 'ai'
 import { fetchApiInfojobsGetJob } from '@/app/services/fetch-api-infojobs'
 import { InterviewData } from '@/app/types/interview-key'
-
-const apiKeyOpenAI = process.env.OPENAI_API_KEY
-
-const openai = new OpenAI({ apiKey: apiKeyOpenAI })
 
 export const GET = async (req: NextRequest) => {
   try {
@@ -21,11 +18,20 @@ export const GET = async (req: NextRequest) => {
     const selectedInterviewer = searchParams.get(
       SearchParamsInterviewKeys.Interviewer
     ) as Interviewer
-
     const selectedJob = searchParams.get(SearchParamsInterviewKeys.JobId)
+    const clientToken = searchParams.get('token')
+    const aiModel = searchParams.get(SearchParamsInterviewKeys.AIModel)
 
-    if (!selectedInterviewType || !selectedInterviewer || !selectedJob) {
-      throw new Error('Parámetros de búsqueda incompletos')
+    if (
+      !selectedInterviewType ||
+      !selectedInterviewer ||
+      !selectedJob ||
+      !clientToken ||
+      !aiModel
+    ) {
+      throw new Error(
+        'Parámetros de búsqueda incompletos o token no proporcionado'
+      )
     }
 
     const { interviewCharacteristics, interviewPersonality } = getInterviewData(
@@ -44,7 +50,9 @@ export const GET = async (req: NextRequest) => {
     const openAIResponse = await getOpenAIResponse({
       interviewer: interviewPersonality,
       interviewType: interviewCharacteristics,
-      jobData
+      jobData,
+      token: clientToken,
+      model: aiModel
     })
 
     const interviewData: InterviewData = {
@@ -67,20 +75,24 @@ export const GET = async (req: NextRequest) => {
 const getOpenAIResponse = async ({
   interviewType,
   interviewer,
-  jobData
+  jobData,
+  token,
+  model
 }: {
   interviewType: string
   interviewer: string
   jobData: APIResultOffer
+  token: string
+  model: string
 }): Promise<string> => {
+  const openAI = createOpenAI({ apiKey: token })
+  const modelo = openAI(model)
   const prompt = `Como entrevistador, tu tarea es llevar a cabo una entrevista del tipo ${interviewType}, adoptando la personalidad del entrevistador ${interviewer}. Nos enfocaremos en los requisitos del puesto y los detalles laborales proporcionados. El trabajo requiere lo siguiente:
-
 
   Título del puesto: ${jobData.title},
   Requisitos mínimos: ${
     jobData.requirementMin || jobData.minRequirements || jobData.description
   }
-  
   
   Debes crear una pregunta y cuatro posibles respuestas, con solo una correcta, siguiendo el siguiente formato deseado:
 
@@ -105,15 +117,15 @@ const getOpenAIResponse = async ({
   `
 
   try {
-    const completion = await openai.completions.create({
-      model: 'gpt-3.5-turbo',
-      prompt: prompt,
+    const response = await generateText({
+      model: modelo,
+      prompt,
       temperature: 0.4,
-      max_tokens: 500
+      maxTokens: 500
     })
-    const openAIResponse = completion.choices[0].text.trim()
-    if (openAIResponse) {
-      return openAIResponse
+
+    if (response) {
+      return response.text
     } else {
       throw new Error('No se ha podido obtener una respuesta de OpenAI')
     }

@@ -1,7 +1,8 @@
 export enum SearchParamsInterviewKeys {
   InterviewType = 'interviewType',
   Interviewer = 'interviewer',
-  JobId = 'jobId'
+  JobId = 'jobId',
+  AIModel = 'aiModel'
 }
 
 export type QuestionData = {

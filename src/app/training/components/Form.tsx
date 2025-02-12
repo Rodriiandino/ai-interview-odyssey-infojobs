@@ -1,13 +1,49 @@
+'use client'
+
 import {
   InterviewType,
   Interviewer,
-  SearchParamKey
+  SearchParamKey,
+  AIModel
 } from '@/app/types/training-key'
+import { useCopy } from './context/copy-context'
+import { useEffect, FormEvent } from 'react'
+import { useRouter } from 'next/navigation'
 import React from 'react'
 
 export default function Form() {
+  const { copiedId } = useCopy()
+  const router = useRouter()
+
+  useEffect(() => {
+    if (copiedId) {
+      const input = document.getElementById('id-jobs') as HTMLInputElement
+      if (input) {
+        input.value = copiedId
+      }
+    }
+  }, [copiedId])
+
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    const formData = new FormData(e.currentTarget)
+    const interviewer = formData.get(SearchParamKey.Interviewer)
+    const interviewType = formData.get(SearchParamKey.InterviewType)
+    const jobId = formData.get(SearchParamKey.JobId)
+    const aiModel = formData.get(SearchParamKey.AIModel)
+    const token = formData.get('token')
+
+    if (token) {
+      sessionStorage.setItem('aiToken', token.toString())
+    }
+
+    router.push(
+      `/interview?interviewer=${interviewer}&interview-type=${interviewType}&job-id=${jobId}&ai-model=${aiModel}`
+    )
+  }
+
   return (
-    <form action='/interview' className='mt-8' id='form'>
+    <form onSubmit={handleSubmit} className='mt-8' id='form'>
       <h3 className='font-medium text-xl'>Selecciona el entrevistador:</h3>
       <div className='grid grid-cols-1 gap-4 text-center sm:grid-cols-3 mb-4'>
         <div>
@@ -104,6 +140,35 @@ export default function Form() {
             required
           />
         </div>
+
+        <div className='mb-4 w-1/2 max-sm:w-full'>
+          <label className='font-medium text-xl' htmlFor='ai-model'>
+            Selecciona el modelo de IA:
+          </label>
+          <select
+            name={SearchParamKey.AIModel}
+            id='ai-model'
+            className='block w-full mt-1 p-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-primary focus:border-primary sm:text-sm'
+            required
+          >
+            <option value={AIModel.GPT35}>GPT-3.5 Turbo</option>
+            <option value={AIModel.GPT4}>GPT-4</option>
+          </select>
+        </div>
+      </div>
+
+      <div className='mb-4 w-full'>
+        <label className='font-medium text-xl' htmlFor='token'>
+          Token de API
+        </label>
+        <input
+          type='password'
+          name='token'
+          id='token'
+          className='block w-full mt-1 p-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-primary focus:border-primary sm:text-sm'
+          placeholder='Ingresa tu token de API'
+          required
+        />
       </div>
 
       <button

@@ -1,7 +1,8 @@
 export enum SearchParamKey {
   InterviewType = 'interview-type',
   Interviewer = 'interviewer',
-  JobId = 'id-jobs'
+  JobId = 'job-id',
+  AIModel = 'ai-model'
 }
 
 export enum InterviewType {
@@ -14,6 +15,11 @@ export enum Interviewer {
   DrJokester = 'Dr. Jokester',
   MadameEccentric = 'Madame Eccentric',
   CaptainQuirk = 'Captain Quirk'
+}
+
+export enum AIModel {
+  GPT35 = 'gpt-3.5-turbo',
+  GPT4 = 'gpt-4'
 }
 
 export const interviewTypeDescriptions = {

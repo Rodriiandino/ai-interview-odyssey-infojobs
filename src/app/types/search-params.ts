@@ -11,8 +11,12 @@ type AdditionalSearchParams = {
 
 export type CombinedSearchParams = BaseSearchParams & AdditionalSearchParams
 
-export type SearchParamsInterview = {
-  interviewType: string
-  interviewer: string
+import { InterviewType, Interviewer, AIModel } from './training-key'
+
+export interface SearchParamsInterview {
+  interviewType: InterviewType
+  interviewer: Interviewer
   jobId: string
+  aiModel: AIModel
+  token: string
 }

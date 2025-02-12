@@ -15,9 +15,11 @@ export async function fetchApiInfojobs({
     maxResults: searchParams.maxResults.toString()
   })
 
-  let url = 'https://api.infojobs.net/api/1/offer'
+  let url = 'https://api.infojobs.net/api/9/offer'
 
   if (params) url += `?${params.toString()}`
+
+  console.log('url', url)
 
   try {
     const response = await fetch(url, {

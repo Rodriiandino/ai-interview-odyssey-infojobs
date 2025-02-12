@@ -1,10 +1,14 @@
 'use client'
 
 import { APIResultOffer } from '@/app/types/result-offer'
+import { useCopy } from './context/copy-context'
 
 export default function Card({ offer: offer }: { offer: APIResultOffer }) {
+  const { setCopiedId } = useCopy()
+
   const handleCopy = () => {
     navigator.clipboard.writeText(offer.id)
+    setCopiedId(offer.id)
   }
 
   return (
