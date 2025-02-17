@@ -16,10 +16,18 @@ export function useTrainingData() {
   const [token, setToken] = useState<string>('')
 
   useEffect(() => {
-    const storedToken = sessionStorage.getItem('aiToken')
-    if (storedToken) {
-      setToken(storedToken)
+    const getStoredToken = () => {
+      try {
+        const storedToken = sessionStorage.getItem('aiToken')
+        if (storedToken) {
+          setToken(storedToken)
+        }
+      } catch (error) {
+        console.error('Error accessing sessionStorage:', error)
+      }
     }
+
+    getStoredToken()
   }, [])
 
   const selectedInterviewType = searchParams.get(
@@ -41,7 +49,7 @@ export function useTrainingData() {
     interviewer: selectedInterviewer,
     jobId: jobId || '',
     aiModel: aiModel,
-    token: token
+    token: token || ''
   }
 
   return {

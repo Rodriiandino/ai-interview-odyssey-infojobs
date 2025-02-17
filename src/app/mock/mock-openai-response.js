@@ -10,7 +10,7 @@ Respuestas:
 3. Haría una pausa para tomar una taza de café y dejar que mi mente brillante encuentre la solución.
 4. Gritaría "¡Eureka!" y comenzaría a escribir código a toda velocidad mientras bailo la canción del éxito.
         
-Respuesta correcta: Analizaría detenidamente los requisitos y diseñaría una solución utilizando las últimas tendencias en tecnologías front-end.
+Respuesta correcta: 2. Analizaría detenidamente los requisitos y diseñaría una solución utilizando las últimas tendencias en tecnologías front-end.
         
 Explicación:
         
@@ -26,7 +26,7 @@ Respuestas:
 3. Activaría el modo de emergencia, que básicamente consiste en ponerme una capa roja y actuar como si supiera lo que estoy haciendo.
 4. Haría una pausa para comer una barra de chocolate y esperaría que la solución se me ocurriera en medio del azúcar.
 
-Respuesta correcta: Revisaría rápidamente el código y buscaría patrones de errores mientras intento mantener la calma.
+Respuesta correcta: 2. Revisaría rápidamente el código y buscaría patrones de errores mientras intento mantener la calma.
 
 Explicación:
 
@@ -42,7 +42,7 @@ Respuestas:
 3. Consultaría mi manual de "Técnicas Ninja para Resolver Bugs" en busca de una solución rápida y efectiva.
 4. Llamaría al equipo de soporte técnico y les diría que necesito un abrazo virtual de emergencia.
 
-Respuesta correcta: Desplegaría una red de códigos de rescate para aislar el error y evitar que se propague.
+Respuesta correcta: 1. Desplegaría una red de códigos de rescate para aislar el error y evitar que se propague.
 
 Explicación:
 
@@ -58,7 +58,7 @@ Respuestas:
 3. Haría una pausa para recitar un encantamiento antiguo de programación y esperar que la solución aparezca por arte de magia.
 4. Convocaría a una reunión de emergencia con mis compañeros magos del código para elaborar un plan de ataque.
 
-Respuesta correcta: Convocaría a una reunión de emergencia con mis compañeros magos del código para elaborar un plan de ataque.
+Respuesta correcta: 4. Convocaría a una reunión de emergencia con mis compañeros magos del código para elaborar un plan de ataque.
 
 Explicación:
 
@@ -74,7 +74,7 @@ Respuestas:
 3. Haría una pausa para reflexionar sobre las enseñanzas de los grandes piratas informáticos del pasado y buscar inspiración para un enfoque creativo.
 4. Enviaría un mensaje al villano cibernético desafiándolo a un duelo de ingenio, confiando en que mi astucia prevalezca sobre su defensa.
 
-Respuesta correcta: Desplegaría mis habilidades de pirata informático para encontrar una vulnerabilidad en el sistema y explotarla como un verdadero corsario digital.
+Respuesta correcta: 1. Desplegaría mis habilidades de pirata informático para encontrar una vulnerabilidad en el sistema y explotarla como un verdadero corsario digital.
 
 Explicación:
 

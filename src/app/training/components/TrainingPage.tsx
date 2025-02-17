@@ -13,7 +13,7 @@ export default function TrainingPage({
 }) {
   return (
     <CopyProvider>
-      <main className='bg-GrayL3 px-9 pt-8 sm:px-6 flex flex-col h-screen max-sm:h-full'>
+      <main className='bg-GrayL3 px-9 pt-8 sm:px-6 flex flex-col'>
         <section className='max-w-3xl mx-auto'>
           <Header
             title='AI Interview'
@@ -23,7 +23,7 @@ export default function TrainingPage({
           <Form />
         </section>
 
-        <section className='max-w-3xl mx-auto mt-8 w-full h-full sm:overflow-hidden sm:overflow-y-scroll'>
+        <section className='max-w-3xl mx-auto mt-8 w-full h-full sm:overflow-hidden'>
           <Suspense fallback={<Loading />}>
             <ListJobOffers params={searchParams} />
           </Suspense>

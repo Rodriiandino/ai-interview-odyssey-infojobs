@@ -54,9 +54,7 @@ export default function useInterviewData() {
       questionData[currentQuestionIndex].selectedAnswer
     const formattedSelectedAnswer =
       selectedAnswerIndex !== null
-        ? questionData[currentQuestionIndex].answers[
-            selectedAnswerIndex
-          ].substring(3)
+        ? questionData[currentQuestionIndex].answers[selectedAnswerIndex]
         : ''
     const isCorrect =
       formattedSelectedAnswer ===

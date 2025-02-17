@@ -1,10 +1,10 @@
-'used client'
+'use client'
 
 import fetchApiOpeniai from '@/app/services/fetch-api-routes-openiai'
 import { InterviewData, JobData, QuestionData } from '@/app/types/interview-key'
 import { SearchParamsInterview } from '@/app/types/search-params'
 import processOpenAIResponse from '@/app/utils/process-open-ai-response'
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useState, useRef } from 'react'
 import { useTrainingContext } from '../training-context'
 
 export default function useInterviewData() {
@@ -16,6 +16,7 @@ export default function useInterviewData() {
     title: '',
     requirement: ''
   })
+  const isFetchingRef = useRef(false)
 
   const limit = 5
 
@@ -23,7 +24,10 @@ export default function useInterviewData() {
 
   const fetchData = useCallback(
     async ({ trainingData }: { trainingData: SearchParamsInterview }) => {
+      if (isFetchingRef.current) return
+
       try {
+        isFetchingRef.current = true
         setLoading(true)
         const response: InterviewData = await fetchApiOpeniai({
           searchParamsInterview: trainingData
@@ -34,14 +38,15 @@ export default function useInterviewData() {
 
         const newQuestionData: QuestionData = processOpenAIResponse(completions)
 
-        setQuestionData([...questionData, newQuestionData])
+        setQuestionData(prevData => [...prevData, newQuestionData])
+      } catch (error: any) {
+        console.error('Error en fetchData:', error)
+      } finally {
         setLoading(false)
-      } catch (error) {
-        console.error(error)
-        setLoading(false)
+        isFetchingRef.current = false
       }
     },
-    [questionData]
+    []
   )
 
   const handleAnswerSelection = (index: number) => {
@@ -56,9 +61,7 @@ export default function useInterviewData() {
       questionData[currentQuestionIndex].selectedAnswer
     const formattedSelectedAnswer =
       selectedAnswerIndex !== null
-        ? questionData[currentQuestionIndex].answers[
-            selectedAnswerIndex
-          ].substring(3)
+        ? questionData[currentQuestionIndex].answers[selectedAnswerIndex]
         : ''
     const isCorrect =
       formattedSelectedAnswer ===
@@ -72,34 +75,39 @@ export default function useInterviewData() {
     setQuestionData(updatedQuestionData)
   }
 
-  const handleNewQuestion = () => {
+  const handleNewQuestion = useCallback(() => {
     setCurrentQuestionIndex(prevIndex => {
       const newIndex = prevIndex + 1
       if (newIndex === limit) {
         setFinished(true)
-        return newIndex - 1
-      } else {
-        if (newIndex === questionData.length) {
-          fetchData({ trainingData })
-        }
+        return prevIndex
+      }
+
+      if (newIndex === questionData.length && !isFetchingRef.current) {
+        fetchData({ trainingData })
       }
       return newIndex
     })
-  }
+  }, [fetchData, limit, questionData.length, trainingData])
 
   const handleReset = () => {
     setQuestionData([])
     setCurrentQuestionIndex(0)
     setFinished(false)
     setLoading(true)
+    isFetchingRef.current = false
   }
 
   useEffect(() => {
-    if (questionData.length === 0) {
+    if (
+      questionData.length === 0 &&
+      trainingData.token &&
+      !isFetchingRef.current
+    ) {
       fetchData({ trainingData })
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [questionData])
+  }, [fetchData, trainingData])
 
   return {
     questionData,
