@@ -1,27 +1,32 @@
-export enum SearchParamKey {
-  InterviewType = 'interview-type',
-  Interviewer = 'interviewer',
-  JobId = 'job-id',
-  AIModel = 'ai-model'
-}
+export const SearchParamKey = {
+  InterviewType: 'interview-type',
+  Interviewer: 'interviewer',
+  JobId: 'job-id',
+  AIModel: 'ai-model'
+} as const
+export type SearchParamKey =
+  (typeof SearchParamKey)[keyof typeof SearchParamKey]
 
-export enum InterviewType {
-  Technical = 'technical',
-  Behavioral = 'behavioral',
-  Case = 'case'
-}
+export const InterviewType = {
+  Technical: 'technical',
+  Behavioral: 'behavioral',
+  Case: 'case'
+} as const
+export type InterviewType = (typeof InterviewType)[keyof typeof InterviewType]
 
-export enum Interviewer {
-  DrJokester = 'Dr. Jokester',
-  MadameEccentric = 'Madame Eccentric',
-  CaptainQuirk = 'Captain Quirk'
-}
+export const Interviewer = {
+  DrJokester: 'Dr. Jokester',
+  MadameEccentric: 'Madame Eccentric',
+  CaptainQuirk: 'Captain Quirk'
+} as const
+export type Interviewer = (typeof Interviewer)[keyof typeof Interviewer]
 
-export enum AIModel {
-  GPT35 = 'gpt-3.5-turbo',
-  GPT4 = 'gpt-4',
-  GPT4o = 'gpt-4o'
-}
+export const AIModel = {
+  GPT35: 'gpt-3.5-turbo',
+  GPT4: 'gpt-4',
+  GPT4o: 'gpt-4o'
+} as const
+export type AIModel = (typeof AIModel)[keyof typeof AIModel]
 
 export const interviewTypeDescriptions = {
   [InterviewType.Technical]:

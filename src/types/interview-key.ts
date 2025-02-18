@@ -1,9 +1,9 @@
-export enum SearchParamsInterviewKeys {
-  InterviewType = 'interviewType',
-  Interviewer = 'interviewer',
-  JobId = 'jobId',
-  AIModel = 'aiModel'
-}
+export const SearchParamsInterviewKeys = {
+  InterviewType: 'interviewType',
+  Interviewer: 'interviewer',
+  JobId: 'jobId',
+  AIModel: 'aiModel'
+} as const
 
 export type QuestionData = {
   question: string

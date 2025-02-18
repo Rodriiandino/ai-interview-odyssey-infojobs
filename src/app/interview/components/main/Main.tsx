@@ -12,11 +12,20 @@ export default function Main() {
     handleAnswerSelection,
     loading,
     finished,
-    jobData
+    jobData,
+    error
   } = useInterviewContext()
 
   const { interviewCharacteristics, interviewPersonality, trainingData } =
     useTrainingContext()
+
+  if (error) {
+    return (
+      <div className='p-4 bg-red-500 text-white text-center'>
+        Error: {error}
+      </div>
+    )
+  }
 
   return (
     <>

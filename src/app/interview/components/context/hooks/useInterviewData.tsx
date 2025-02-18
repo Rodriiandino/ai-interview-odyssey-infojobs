@@ -16,6 +16,7 @@ export default function useInterviewData() {
     title: '',
     requirement: ''
   })
+  const [error, setError] = useState<string | null>(null)
   const isFetchingRef = useRef(false)
 
   const limit = 5
@@ -41,6 +42,7 @@ export default function useInterviewData() {
         setQuestionData(prevData => [...prevData, newQuestionData])
       } catch (error: any) {
         console.error('Error en fetchData:', error)
+        setError(error instanceof Error ? error.message : String(error))
       } finally {
         setLoading(false)
         isFetchingRef.current = false
@@ -96,6 +98,7 @@ export default function useInterviewData() {
     setFinished(false)
     setLoading(true)
     isFetchingRef.current = false
+    setError(null)
   }
 
   useEffect(() => {
@@ -119,6 +122,7 @@ export default function useInterviewData() {
     handleSubmit,
     handleNewQuestion,
     handleReset,
-    jobData
+    jobData,
+    error
   }
 }

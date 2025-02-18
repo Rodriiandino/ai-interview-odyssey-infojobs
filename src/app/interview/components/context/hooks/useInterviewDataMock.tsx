@@ -15,6 +15,7 @@ export default function useInterviewData() {
     requirement: ''
   })
   const [indexMock, setIndexMock] = useState(0)
+  const [error, setError] = useState<string | null>(null)
   const limit = 5
 
   const fetchData = useCallback(async () => {
@@ -108,6 +109,7 @@ export default function useInterviewData() {
     handleSubmit,
     handleNewQuestion,
     handleReset,
-    jobData
+    jobData,
+    error
   }
 }

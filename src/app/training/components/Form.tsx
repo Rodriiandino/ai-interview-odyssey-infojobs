@@ -262,7 +262,7 @@ export default function Form() {
               className='font-medium max-[397px]:text-base text-lg md:text-xl'
               htmlFor='id-jobs'
             >
-              ID Oferta de Trabajo *
+              ID Oferta de Trabajo
             </label>
             <input
               type='text'
@@ -270,7 +270,6 @@ export default function Form() {
               id='id-jobs'
               className='block w-full mt-1 p-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-primary focus:border-primary text-sm'
               placeholder='282f50dec44d1ca...'
-              required
             />
           </div>
         </div>

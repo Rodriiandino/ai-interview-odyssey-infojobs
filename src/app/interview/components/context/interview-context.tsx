@@ -17,6 +17,7 @@ type InterviewDataContext = {
   handleNewQuestion: () => void
   handleReset: () => void
   jobData: JobData
+  error: string | null
 }
 
 type InterviewDataContextProviderProps = {
