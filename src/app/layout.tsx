@@ -18,7 +18,7 @@ export const metadata: Metadata = {
     siteName: 'Ai Interview Odyssey',
     images: [
       {
-        url: 'https://ai-interview-odyssey-infojobs.vercel.app/og-image.png',
+        url: 'https://ai-interview-odyssey-infojobs.vercel.app/og-image.jpg',
         alt: 'Ai Interview Odyssey'
       }
     ]
