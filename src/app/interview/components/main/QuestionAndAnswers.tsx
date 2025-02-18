@@ -1,5 +1,5 @@
-import { QuestionData } from '@/app/types/interview-key'
-import { SearchParamsInterview } from '@/app/types/search-params'
+import { QuestionData } from '@/types/interview-key'
+import { SearchParamsInterview } from '@/types/search-params'
 import InterviewAccordion from './InterviewAccordion'
 
 interface QuestionAndAnswersProps {

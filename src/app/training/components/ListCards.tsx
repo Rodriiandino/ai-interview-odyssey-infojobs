@@ -1,4 +1,4 @@
-import { APIResultOffer } from '@/app/types/result-offer'
+import { APIResultOffer } from '@/types/result-offer'
 import Card from './Card'
 
 export default async function ListCards({

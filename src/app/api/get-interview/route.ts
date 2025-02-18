@@ -1,12 +1,12 @@
-import { InterviewType, Interviewer } from '@/app/types/training-key'
-import { SearchParamsInterviewKeys } from '@/app/types/interview-key'
-import { APIResultOffer } from '@/app/types/result-offer'
+import { InterviewType, Interviewer } from '@/types/training-key'
+import { SearchParamsInterviewKeys } from '@/types/interview-key'
+import { APIResultOffer } from '@/types/result-offer'
 import { NextResponse } from 'next/server'
-import { getInterviewData } from '@/app/utils/get-interview-data'
+import { getInterviewData } from '@/utils/get-interview-data'
 import { createOpenAI } from '@ai-sdk/openai'
 import { generateText } from 'ai'
-import { fetchApiInfojobsGetJob } from '@/app/services/fetch-api-infojobs'
-import { InterviewData } from '@/app/types/interview-key'
+import { fetchApiInfojobsGetJob } from '@/services/fetch-api-infojobs'
+import { InterviewData } from '@/types/interview-key'
 
 export async function POST(req: Request) {
   try {

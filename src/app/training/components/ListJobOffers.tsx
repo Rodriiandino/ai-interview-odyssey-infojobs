@@ -1,13 +1,10 @@
 import {
   fetchApiInfojobs,
   fetchApiInfojobsGetCategories
-} from '@/app/services/fetch-api-infojobs'
+} from '@/services/fetch-api-infojobs'
 import Filtro from './Filtro'
 import ListCards from './ListCards'
-import {
-  BaseSearchParams,
-  CombinedSearchParams
-} from '@/app/types/search-params'
+import { BaseSearchParams, CombinedSearchParams } from '@/types/search-params'
 import { Suspense } from 'react'
 import Loading from './loading'
 

@@ -2,7 +2,7 @@
 import { useSearchParams, usePathname, useRouter } from 'next/navigation'
 import { useState, useCallback, useEffect } from 'react'
 import { debounce } from 'lodash'
-import { Categories } from '../../types/result-offer'
+import { Categories } from '../../../types/result-offer'
 
 export default function Filtro({
   page = 1,
@@ -77,7 +77,7 @@ export default function Filtro({
       <div className='flex m-0 p-0 gap-4 justify-between items-center flex-col sm:flex-row'>
         <div className='flex m-0 p-0 gap-2 items-center'>
           <button
-            className='w-24 py-2 bg-primary text-white rounded-lg hover:bg-secondary disabled:bg-GrayL2 focus:outline-none sm:text-sm transition-colors duration-200'
+            className='w-24 py-2 bg-primary text-white rounded-lg hover:bg-secondary disabled:bg-GrayL2 focus:outline-none text-sm transition-colors duration-200'
             onClick={prevPage}
             disabled={disablePrev}
           >
@@ -87,7 +87,7 @@ export default function Filtro({
             {page} / {totalPages}
           </p>
           <button
-            className='w-24 py-2 bg-primary text-white rounded-lg hover:bg-secondary disabled:bg-GrayL2 focus:outline-none sm:text-sm transition-colors duration-200'
+            className='w-24 py-2 bg-primary text-white rounded-lg hover:bg-secondary disabled:bg-GrayL2 focus:outline-none text-sm transition-colors duration-200'
             onClick={nextPage}
             disabled={disableNext}
           >
@@ -98,7 +98,7 @@ export default function Filtro({
         <select
           value={category}
           onChange={handleCategoryChange}
-          className='block w-full p-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-primary focus:border-primary sm:text-sm'
+          className='block w-full p-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-primary focus:border-primary text-sm'
         >
           {categories.map(category => (
             <option key={category.id} value={category.key}>
@@ -111,7 +111,7 @@ export default function Filtro({
           placeholder='Frontend, Backend, Fullstack...'
           value={keyword}
           onChange={handleKeywordChange}
-          className='block w-full p-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-primary focus:border-primary sm:text-sm'
+          className='block w-full p-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-primary focus:border-primary text-sm'
         />
       </div>
     </header>

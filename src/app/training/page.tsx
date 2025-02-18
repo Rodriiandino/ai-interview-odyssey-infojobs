@@ -1,5 +1,5 @@
 import TrainingPage from './components/TrainingPage'
-import { BaseSearchParams } from '@/app/types/search-params'
+import { BaseSearchParams } from '@/types/search-params'
 
 export default function Training({
   searchParams

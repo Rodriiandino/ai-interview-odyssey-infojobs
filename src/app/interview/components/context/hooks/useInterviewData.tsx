@@ -1,9 +1,9 @@
 'use client'
 
-import fetchApiOpeniai from '@/app/services/fetch-api-routes-openiai'
-import { InterviewData, JobData, QuestionData } from '@/app/types/interview-key'
-import { SearchParamsInterview } from '@/app/types/search-params'
-import processOpenAIResponse from '@/app/utils/process-open-ai-response'
+import fetchApiOpeniai from '@/services/fetch-api-routes-openiai'
+import { InterviewData, JobData, QuestionData } from '@/types/interview-key'
+import { SearchParamsInterview } from '@/types/search-params'
+import processOpenAIResponse from '@/utils/process-open-ai-response'
 import { useCallback, useEffect, useState, useRef } from 'react'
 import { useTrainingContext } from '../training-context'
 

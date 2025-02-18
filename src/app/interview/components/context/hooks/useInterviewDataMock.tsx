@@ -1,9 +1,9 @@
 'used client'
 
-import { JobData, QuestionData } from '@/app/types/interview-key'
-import processOpenAIResponse from '@/app/utils/process-open-ai-response'
+import { JobData, QuestionData } from '@/types/interview-key'
+import processOpenAIResponse from '@/utils/process-open-ai-response'
 import { useCallback, useEffect, useState } from 'react'
-import { mockOpenAIResponse } from '@/app/mock/mock-openai-response'
+import { mockOpenAIResponse } from '@/mock/mock-openai-response'
 
 export default function useInterviewData() {
   const [questionData, setQuestionData] = useState<QuestionData[]>([])

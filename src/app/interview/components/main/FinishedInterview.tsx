@@ -1,7 +1,7 @@
 'use client'
 
-import { JobData, QuestionData } from '@/app/types/interview-key'
-import { SearchParamsInterview } from '@/app/types/search-params'
+import { JobData, QuestionData } from '@/types/interview-key'
+import { SearchParamsInterview } from '@/types/search-params'
 import { useEffect, useState } from 'react'
 import InterviewAccordion from './InterviewAccordion'
 

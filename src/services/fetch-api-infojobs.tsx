@@ -1,4 +1,4 @@
-import { CombinedSearchParams } from '@/app/types/search-params'
+import { CombinedSearchParams } from '@/types/search-params'
 
 const clientId = process.env.INFOJOBS_CLIENT_KEY
 const clientSecret = process.env.INFOJOBS_SECRET_KEY

@@ -6,9 +6,9 @@ import {
   Interviewer,
   SearchParamKey,
   AIModel
-} from '@/app/types/training-key'
-import { SearchParamsInterview } from '@/app/types/search-params'
-import { getInterviewData } from '@/app/utils/get-interview-data'
+} from '@/types/training-key'
+import { SearchParamsInterview } from '@/types/search-params'
+import { getInterviewData } from '@/utils/get-interview-data'
 import { useEffect, useState } from 'react'
 
 export function useTrainingData() {

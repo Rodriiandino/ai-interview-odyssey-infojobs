@@ -1,6 +1,6 @@
 'use client'
 
-import { SearchParamsInterview } from '@/app/types/search-params'
+import { SearchParamsInterview } from '@/types/search-params'
 import { createContext, useContext } from 'react'
 import { useTrainingData } from './hooks/useTrainingData'
 

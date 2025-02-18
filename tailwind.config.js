@@ -10,15 +10,25 @@ const config = {
   theme: {
     extend: {
       colors: {
+        primary: {
+          DEFAULT: '#167db7',
+          300: '#5eb2e6'
+        },
+        secondary: {
+          DEFAULT: '#ff6340'
+        },
         success: '#00A550',
         error: '#E93E40',
-        primary: '#167DB7',
         primaryL1: '#5CA4CD',
         GrayL3: '#F5F5F5',
         GrayL2: '#B8B8B8',
         GrayD4: '#484B4D',
-        secondary: '#FF6340',
         alert: '#F1C40F'
+      },
+      backgroundImage: {
+        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
+        'gradient-conic':
+          'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))'
       }
     }
   },

@@ -1,6 +1,6 @@
 'use client'
 
-import { JobData, QuestionData } from '@/app/types/interview-key'
+import { JobData, QuestionData } from '@/types/interview-key'
 import { createContext, useContext } from 'react'
 import useInterviewData from './hooks/useInterviewData'
 import useInterviewDataMock from './hooks/useInterviewDataMock'

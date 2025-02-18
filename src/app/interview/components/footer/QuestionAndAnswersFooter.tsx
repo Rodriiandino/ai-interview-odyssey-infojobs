@@ -1,4 +1,4 @@
-import { QuestionData } from '@/app/types/interview-key'
+import { QuestionData } from '@/types/interview-key'
 
 interface QuestionAndAnswersFooterProps {
   loading: boolean

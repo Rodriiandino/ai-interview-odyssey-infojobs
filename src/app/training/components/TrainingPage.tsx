@@ -1,4 +1,4 @@
-import { BaseSearchParams } from '@/app/types/search-params'
+import { BaseSearchParams } from '@/types/search-params'
 import ListJobOffers from './ListJobOffers'
 import { CopyProvider } from './context/copy-context'
 import Form from './Form'
@@ -13,7 +13,7 @@ export default function TrainingPage({
 }) {
   return (
     <CopyProvider>
-      <main className='bg-GrayL3 px-9 pt-8 sm:px-6 flex flex-col'>
+      <main className='bg-GrayL3 px-9 pt-8 sm:px-6 flex flex-col overflow-hidden'>
         <section className='max-w-3xl mx-auto'>
           <Header
             title='AI Interview'
